@@ -2,9 +2,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.seriatornet.yhondri.seriatornet.Main.MainActivity">
+
     <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:title="@string/action_settings"
-        app:showAsAction="never" />
+        android:id="@+id/action_watching"
+        android:enabled="true"
+        android:icon="@mipmap/ic_upcoming"
+        android:title="@string/upcoming"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_search"
+        android:enabled="true"
+        android:icon="@mipmap/ic_search_black_24dp"
+        android:title="@string/search"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_profile"
+        android:enabled="true"
+        android:icon="@mipmap/ic_face_black"
+        android:title="@string/profile" />
 </menu>

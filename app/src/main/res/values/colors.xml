@@ -3,4 +3,10 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="white">#FFFFFF</color>
+    <color name="light_gray">#38FFFFFF</color>
+    <color name="text_light_gray">#A6FFFFFF</color>
+
+    <color name="cardview_semitransparent_dark_background">#59000000</color>
+
 </resources>

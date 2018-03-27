@@ -1,16 +1,17 @@
 package com.seriatornet.yhondri.seriatornet.Main;
 
-import android.icu.text.SymbolTable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.view.Menu;
 import android.view.MenuItem;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -19,55 +20,85 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.seriatornet.yhondri.seriatornet.Model.APIKey;
 import com.seriatornet.yhondri.seriatornet.Model.DataBase.Show.Show;
 import com.seriatornet.yhondri.seriatornet.R;
-
 import java.util.List;
 import java.util.Map;
-
 import io.realm.Realm;
 import io.realm.RealmQuery;
-import io.realm.RealmResults;
 
 public class MainActivity extends AppCompatActivity {
+
+    private static final String SELECTED_ITEM = "arg_selected_item";
+
+    private int mSelectedItem;
+    private BottomNavigationView mBottomNav;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-
                 loadShows();
+            }
+        });
+
+        selectFragment(R.id.action_watching);
+
+        mBottomNav = findViewById(R.id.bottom_navigation);
+        mBottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                selectFragment(item.getItemId());
+                return true;
             }
         });
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putInt(SELECTED_ITEM, mSelectedItem);
+        super.onSaveInstanceState(outState);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+    private void selectFragment(int itemId) {
+        Fragment fragment = null;
+        // init corresponding fragment
+        switch (itemId) {
+            case R.id.action_watching:
+                fragment = UpcomingFragment.newInstance();
+                break;
+            case R.id.action_search:
+                fragment = DiscoverFragment.newInstance();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+                break;
+            case R.id.action_profile:
+                fragment = ProfileFragment.newInstance();
+                break;
         }
 
-        return super.onOptionsItemSelected(item);
+        // update selected item
+        mSelectedItem = itemId;
+
+        updateToolbarText("....");
+
+        if (fragment != null) {
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.container, fragment, fragment.getTag()).addToBackStack(null);
+            fragmentTransaction.commit();
+        }
+    }
+
+    private void updateToolbarText(CharSequence text) {
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setTitle(text);
+        }
     }
 
     private void loadShows() {
@@ -78,11 +109,6 @@ public class MainActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             saveShows(task);
-//                        for (QueryDocumentSnapshot document : task.getResult()) {
-//
-//
-//                            Log.d("SERIATORNET", document.getId() + " => " + document.getData());
-//                        }
                         } else {
                             Log.w("SERIATORNET", "Error getting documents.", task.getException());
                         }

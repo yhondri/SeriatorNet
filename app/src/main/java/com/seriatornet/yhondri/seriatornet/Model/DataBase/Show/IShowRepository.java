@@ -5,4 +5,12 @@ package com.seriatornet.yhondri.seriatornet.Model.DataBase.Show;
  */
 
 public interface IShowRepository {
+    void createShow(Show show);
+
+    Show getShowById(String id);
+
+    void updateShow(Show show);
+
+    void deleteShowById(String id);
 }
+
