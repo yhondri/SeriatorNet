@@ -1,15 +1,13 @@
 package com.seriatornet.yhondri.seriatornet.Welcome;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.seriatornet.yhondri.seriatornet.R;
 
-public class WelcomeActivity extends AppCompatActivity {
+public class WelcomeActivity extends AppCompatActivity implements WelcomeView {
 
     private WelcomePresentation presenter;
 
@@ -19,9 +17,16 @@ public class WelcomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_welcome);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        toolbar.setTitle(R.string.welcome);
 
         WelcomeWireframe router = new WelcomeRouter(this);
-        presenter = new WelcomePresenter(router);
+        presenter = new WelcomePresenter(router, this, this);
+        presenter.onCreate();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
     public void onStart(View view) {
@@ -31,4 +36,13 @@ public class WelcomeActivity extends AppCompatActivity {
     public void onRegister(View view) {
         presenter.onRegisterClicked();
     }
+
+    //region WelcomeView implementation
+
+    @Override
+    public void finishActivity() {
+        finish();
+    }
+
+    //enregion
 }

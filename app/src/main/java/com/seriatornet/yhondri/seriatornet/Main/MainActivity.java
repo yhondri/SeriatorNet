@@ -66,6 +66,12 @@ public class MainActivity extends AppCompatActivity {
         super.onSaveInstanceState(outState);
     }
 
+    @Override
+    public void onBackPressed() {
+
+
+    }
+
     private void selectFragment(int itemId) {
         Fragment fragment = null;
         // init corresponding fragment

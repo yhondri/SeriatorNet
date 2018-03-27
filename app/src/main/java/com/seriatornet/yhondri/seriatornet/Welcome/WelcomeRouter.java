@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.seriatornet.yhondri.seriatornet.Login.LoginActivity;
+import com.seriatornet.yhondri.seriatornet.Main.MainActivity;
 import com.seriatornet.yhondri.seriatornet.Register.RegisterActivity;
 
 /**
@@ -19,13 +20,19 @@ public class WelcomeRouter implements WelcomeWireframe {
     }
 
     @Override
-    public void goToLoginActivity() {
+    public void showMainActivity() {
+        Intent mainActivityIntent = new Intent(context, MainActivity.class);
+        context.startActivity(mainActivityIntent);
+    }
+
+    @Override
+    public void showLoginActivity() {
         Intent loginIntent = new Intent(context, LoginActivity.class);
         context.startActivity(loginIntent);
     }
 
     @Override
-    public void goToRegisterActivity() {
+    public void showRegisterActivity() {
         Intent registerIntent = new Intent(context, RegisterActivity.class);
         context.startActivity(registerIntent);
     }

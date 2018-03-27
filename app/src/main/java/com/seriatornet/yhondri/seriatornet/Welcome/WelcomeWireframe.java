@@ -5,6 +5,7 @@ package com.seriatornet.yhondri.seriatornet.Welcome;
  */
 
 public interface WelcomeWireframe {
-    void goToLoginActivity();
-    void goToRegisterActivity();
+    void showMainActivity();
+    void showLoginActivity();
+    void showRegisterActivity();
 }

@@ -6,6 +6,7 @@ package com.seriatornet.yhondri.seriatornet.Welcome;
 
 public interface WelcomePresentation {
 
+    void onCreate();
     void onStartClicked();
     void onRegisterClicked();
 
