@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.seriatornet.yhondri.seriatornet.Welcome.WelcomeActivity"
+    tools:showIn="@layout/activity_welcome">
+
+    <ImageView
+        android:id="@+id/app_icon_imageView"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:contentDescription="@string/start"
+        android:src="@drawable/ic_television"
+        android:tint="@color/colorPrimaryDark" />
+
+    <TextView
+        android:id="@+id/app_name_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/app_icon_imageView"
+        android:layout_centerHorizontal="true"
+        android:text="@string/welcome"
+        android:textSize="30sp"
+        android:typeface="serif" />
+
+    <Button
+        android:id="@+id/go_to_login_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/go_to_register_button"
+        android:layout_centerHorizontal="true"
+        android:background="@color/colorPrimaryDark"
+        android:text="@string/start"
+        android:typeface="serif"
+        android:textSize="18sp"
+        android:textColor="@color/white"
+        android:onClick="onStart"
+        android:padding="8dp"
+        />
+
+    <Button
+        android:id="@+id/go_to_register_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@android:color/transparent"
+        android:text="@string/not_account"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="12sp"
+        android:onClick="onRegister"
+        />
+
+</RelativeLayout>

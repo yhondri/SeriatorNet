@@ -20,5 +20,11 @@
     <string name="upcoming">Próximos</string>
     <string name="search">Buscar</string>
     <string name="profile">Perfil</string>
+    <string name="title_activity_register">Registro</string>
+
+    <!-- Welcome -->
+    <string name="welcome">Bienvenido</string>
+    <string name="start">Empezar</string>
+    <string name="not_account">¿No tienes cuenta?, Regístrate</string>
 
 </resources>
