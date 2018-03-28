@@ -5,7 +5,6 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.LoaderManager;
 import android.content.CursorLoader;
-import android.content.Intent;
 import android.content.Loader;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -17,7 +16,6 @@ import android.support.v7.app.AppCompatActivity;
 
 import android.os.Build;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -29,9 +27,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.seriatornet.yhondri.seriatornet.Main.MainActivity;
 import com.seriatornet.yhondri.seriatornet.R;
-import com.seriatornet.yhondri.seriatornet.Register.RegisterActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +46,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderManager.Lo
     private EditText mPasswordView;
     private View mProgressView;
     private Button mEmailSignInButton;
-    private View mLoginFormView;
     private LoginPresentation presenter;
 
     @Override
@@ -80,7 +75,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderManager.Lo
             }
         });
 
-        mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
 
         mEmailView.setText("hannarejy-1340@yopmail.com");
@@ -176,22 +170,15 @@ public class LoginActivity extends AppCompatActivity implements LoaderManager.Lo
     @Override
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
     public void onProgressBar(final Boolean isHidden) {
-        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
-        // for very easy animations. If available, use these APIs to fade-in
-        // the progress spinner.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
-            int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
+        int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
-            mProgressView.setVisibility(isHidden ? View.GONE : View.VISIBLE);
-            mProgressView.animate().setDuration(shortAnimTime).alpha(isHidden ? 0 : 1).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mProgressView.setVisibility(isHidden ? View.GONE : View.VISIBLE);
-                }
-            });
-        } else {
-            mProgressView.setVisibility(isHidden ? View.GONE : View.VISIBLE);
-        }
+        mProgressView.setVisibility(isHidden ? View.GONE : View.VISIBLE);
+        mProgressView.animate().setDuration(shortAnimTime).alpha(isHidden ? 0 : 1).setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                mProgressView.setVisibility(isHidden ? View.GONE : View.VISIBLE);
+            }
+        });
     }
 
     @Override
@@ -280,7 +267,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderManager.Lo
         };
 
         int ADDRESS = 0;
-        int IS_PRIMARY = 1;
     }
 
     private void addEmailsToAutoComplete(List<String> emailAddressCollection) {
