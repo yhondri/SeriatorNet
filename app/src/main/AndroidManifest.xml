@@ -21,7 +21,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Login.LoginActivity"
-            android:label="@string/title_activity_login"
+            android:label="@string/login"
             android:noHistory="true"/>
         <activity
             android:name=".Register.RegisterActivity"

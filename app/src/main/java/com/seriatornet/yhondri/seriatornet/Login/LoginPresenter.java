@@ -1,7 +1,6 @@
-package com.seriatornet.yhondri.seriatornet.Register;
+package com.seriatornet.yhondri.seriatornet.Login;
 
 import android.content.Context;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
@@ -15,23 +14,21 @@ import com.seriatornet.yhondri.seriatornet.Util.SharedPreferenceKey;
 import com.seriatornet.yhondri.seriatornet.Util.SharedPreferenceUtils;
 import com.seriatornet.yhondri.seriatornet.Util.Utils;
 
-import java.util.regex.Pattern;
-
 /**
- * Created by yhondri on 27/03/2018.
+ * Created by yhondri on 28/03/2018.
  */
 
-public class RegisterPresenter implements RegisterPresentation, OnCompleteListener<AuthResult> {
+public class LoginPresenter implements LoginPresentation, OnCompleteListener<AuthResult> {
 
-    private FirebaseAuth firebaseAuth;
     private Context context;
-    private RegisterWireframe router;
-    private RegisterView view;
+    private FirebaseAuth firebaseAuth;
+    private LoginView view;
+    private LoginWireframe router;
 
-    public RegisterPresenter(RegisterView view, RegisterWireframe router, Context context) {
+    public LoginPresenter(LoginView view, LoginWireframe router, Context context) {
         this.view = view;
-        this.router = router;
         this.context = context;
+        this.router = router;
     }
 
     @Override
@@ -40,8 +37,7 @@ public class RegisterPresenter implements RegisterPresentation, OnCompleteListen
     }
 
     @Override
-    public void onRegisterUser(String email, String password) {
-
+    public void onLogin(String email, String password) {
         view.resetFieldsErrors();
 
         if (TextUtils.isEmpty(email)) {
@@ -59,26 +55,15 @@ public class RegisterPresenter implements RegisterPresentation, OnCompleteListen
             return;
         }
 
-        if (password.length() < 5) {
-            view.showInvalidPasswordError(context.getString(R.string.error_password_is_too_short));
-            return;
-        }
-
-        if (!Utils.isPasswordValid(password)) {
-            view.showInvalidPasswordError(context.getString(R.string.error_invalid_password));
-            return;
-        }
-
         view.onProgressBar(false);
-        view.onRegisterUser();
+        view.onLoginUser();
 
-        firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this);
+        firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this);
     }
 
     @Override
     public void onComplete(@NonNull Task<AuthResult> task) {
-
-        view.registerDidEnd();
+        view.loginDidEnd();
 
         if (task.isSuccessful()) {
             FirebaseUser user = task.getResult().getUser();
