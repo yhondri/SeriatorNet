@@ -12,14 +12,22 @@ import io.realm.annotations.PrimaryKey;
  */
 
 public class Episode extends RealmObject {
+
     @PrimaryKey
     private int id;
     private String title;
-    private String descriptiosn;
-    private String imageURL;
     private int number;
     private Date emissionDate;
+    private String overview;
     private Season season;
+
+    public Season getSeason() {
+        return season;
+    }
+
+    public void setSeason(Season season) {
+        this.season = season;
+    }
 
     public int getId() {
         return id;
@@ -35,22 +43,6 @@ public class Episode extends RealmObject {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public String getDescriptiosn() {
-        return descriptiosn;
-    }
-
-    public void setDescriptiosn(String descriptiosn) {
-        this.descriptiosn = descriptiosn;
-    }
-
-    public String getImageURL() {
-        return imageURL;
-    }
-
-    public void setImageURL(String imageURL) {
-        this.imageURL = imageURL;
     }
 
     public int getNumber() {
@@ -69,11 +61,11 @@ public class Episode extends RealmObject {
         this.emissionDate = emissionDate;
     }
 
-    public Season getSeason() {
-        return season;
+    public String getOverview() {
+        return overview;
     }
 
-    public void setSeason(Season season) {
-        this.season = season;
+    public void setOverview(String overview) {
+        this.overview = overview;
     }
 }

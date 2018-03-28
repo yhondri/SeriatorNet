@@ -62,7 +62,7 @@ public class UpcomingFragment extends Fragment implements UpcomingFragmentView {
         recyclerView.setLayoutManager(linearLayoutManager);
 
         List<Episode> episodes = presenter.getEpisodes();
-        UpcomingRecyclerViewAdapter adapter = new UpcomingRecyclerViewAdapter(episodes);
+        UpcomingRecyclerViewAdapter adapter = new UpcomingRecyclerViewAdapter(episodes, getActivity());
         recyclerView.setAdapter(adapter);
 
         return rootView;

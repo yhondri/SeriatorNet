@@ -1,0 +1,57 @@
+[
+  {
+    "id": 1,
+    "name": "The Simpsons",
+    "country": "USA",
+    "runtime": 22,
+    "language": "English, Spanish",
+    "genre": "Animation, Comedy",
+    "poster": "thesimpsons_poster",
+    "banner": "thesimpsons_banner",
+    "description": "Set in Springfield, the average American town, the show focuses on the antics and everyday adventures of the Simpson family; Homer, Marge, Bart, Lisa and Maggie, as well as a virtual cast of thousands. Since the beginning, the series has been a pop culture icon, attracting hundreds of celebrities to guest star. The show has also made name for itself in its fearless satirical take onpolitics, media and American life in general."
+  },
+  {
+    "id": 2,
+    "name": "Mr. Robot",
+    "country": "USA",
+    "runtime": 43,
+    "language": "English, Spanish",
+    "genre": "Drama, Crime",
+    "poster": "mrrobot_poster",
+    "banner": "mrrobot_banner",
+    "description": "Mr. Robot follows Elliot, a young programmer who works as a cyber-security engineer by day and a vigilante hacker by night. Elliot finds himself at a crossroads when the mysterious leader of an underground hacker group recruits him to destroy the corporation he is paid to protect."
+  },
+  {
+    "id": 3,
+    "name": "Big Mouth",
+    "country": "USA",
+    "runtime": 27,
+    "language": "English, Spanish",
+    "genre": "Animation, Comedy",
+    "poster": "bigmouth_poster",
+    "banner": "bigmouth_banner",
+    "description": "Teenage friends find their lives upended by the wonders and horrors of puberty in this edgy comedy from real-life pals Nick Kroll and Andrew Goldberg."
+  },
+  {
+    "id": 4,
+    "name": "Game of Thrones",
+    "country": "USA",
+    "runtime": 60,
+    "language": "English, Spanish",
+    "genre": "Drama, Fantasy, Science Fiction, Action, Adventure",
+    "poster": "gameofthrones_poster",
+    "banner": "gameofthrones_banner",
+    "description": "Seven noble families fight for control of the mythical land of Westeros. Friction between the houses leads to full-scale war. All while a very ancient evil awakens in the farthest north. Amidst the war, a neglected military order of misfits, the Night's Watch, is all that stands between the realms of men and the icy horrors beyond."
+  },
+  {
+    "id": 5,
+    "name": "The Flash",
+    "country": "USA",
+    "runtime": 45,
+    "language": "English, Spanish",
+    "genre": "Drama, Fantasy, Science Fiction, Action, Adventure",
+    "poster": "theflash_poster",
+    "banner": "theflash_banner",
+    "description": "After being struck by lightning, Barry Allen wakes up from his coma to discover he's been given the power of super speed, becoming the Flash, fighting crime in Central City."
+  }
+]

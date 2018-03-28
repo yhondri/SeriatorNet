@@ -1,12 +1,22 @@
 package com.seriatornet.yhondri.seriatornet.Model.DataBase;
 
+import android.content.Context;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+import com.seriatornet.yhondri.seriatornet.ApplicationController;
 import com.seriatornet.yhondri.seriatornet.Model.DataBase.Episode.Episode;
 import com.seriatornet.yhondri.seriatornet.Model.DataBase.Season.Season;
 import com.seriatornet.yhondri.seriatornet.Model.DataBase.Show.Show;
+import com.seriatornet.yhondri.seriatornet.R;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.lang.reflect.Type;
+import java.util.List;
 
 import io.realm.Realm;
 
@@ -16,62 +26,87 @@ import io.realm.Realm;
 
 public class MockDataManager {
 
-    public static void mockShows() {
-        Realm realm = Realm.getDefaultInstance();
-        realm.beginTransaction();
-        Show show1 = realm.createObject(Show.class, "The_Simpsons");
-        show1.setName("The Simpsons");
-        show1.setDescription("Set in Springfield, the average American town, the show focuses on " +
-                "the antics and everyday adventures of the Simpson family; Homer, Marge, Bart, Lisa" +
-                " and Maggie, as well as a virtual cast of thousands. Since the beginning, " +
-                "the series has been a pop culture icon, attracting hundreds of celebrities to guest" +
-                " star. The show has also made name for itself in its fearless satirical take on " +
-                "politics, media and American life in general.");
-
-        show1.setCountry("USA");
-        show1.setRuntime(22);
-        show1.setLanguage("English");
-        show1.setGenre("Animation, Comedy");
-
-        realm.commitTransaction();
-    }
-
-    public static void mockSeasons(Show show) {
-        Realm realm = Realm.getDefaultInstance();
-        realm.beginTransaction();
-
-        Season season1 = realm.createObject(Season.class, 1);
-        season1.setName("Season 1");
-        season1.setOrder(1);
-        season1.setShow(show);
-
-        realm.commitTransaction();
-    }
-
-    public static void mockEpisodes(Season season) {
-        Realm realm = Realm.getDefaultInstance();
-        realm.beginTransaction();
-
-        Episode episode = realm.createObject(Episode.class, 1);
-        episode.setTitle("The Serfsons");
-        episode.setDescriptiosn("In a magical medieval world, Marge's mother is turned into an Ice" +
-                " Walker and the only way for Homer to afford the cure is to force Lisa to use " +
-                "illegal magic. When the King discovers this, he kidnaps Lisa, and Homer must lead" +
-                " a feudal uprising to save her.");
-        episode.setImageURL("episode_background_1");
-        episode.setNumber(1);
-        String dtStart = "2017-10-02T02:00:00Z";
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
-        Date date = null;
+    // Private Methods *********************************************************************************
+    private static String fileGetContents(Context c, int resource) {
+        InputStream in = c.getResources().openRawResource(resource);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+        StringBuilder s = new StringBuilder();
+        String l;
         try {
-            date = format.parse(dtStart);
-        } catch (ParseException e) {
+            while ((l = reader.readLine()) != null) {
+                s.append(l);
+            }
+            in.close();
+        } catch (IOException e) {
             e.printStackTrace();
         }
-        episode.setEmissionDate(date);
-        episode.setSeason(season);
+        return s.toString();
+    }
+
+    public static void parseShows(Realm realm) {
+        Gson gson = new GsonBuilder()
+                .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
+                .create();
+        String json = fileGetContents(ApplicationController.getInstance(), R.raw.shows);
+        Type listType = new TypeToken<List<Show>>() {
+        }.getType();
+
+        List<Show> shows = gson.fromJson(json.toString(), listType);
+        realm.beginTransaction();
+
+        for (Show show : shows) {
+            Show newShow = realm.createObject(Show.class, show.getId());
+            newShow.setName(show.getName());
+            newShow.setCountry(show.getCountry());
+            newShow.setRuntime(show.getRuntime());
+            newShow.setLanguage(show.getLanguage());
+            newShow.setGenre(show.getGenre());
+            newShow.setPoster(show.getPoster());
+            newShow.setBanner(show.getBanner());
+            newShow.setDescription(show.getDescription());
+        }
 
         realm.commitTransaction();
     }
 
+    public static void parseEpisodes(Realm realm) {
+        int[] episodeIds = {R.raw.thesimpsons_episodes, R.raw.mrrobot_episodes,
+                R.raw.bigmouth_episodes, R.raw.gameofthrones_episodes, R.raw.theflash_episodes};
+
+        for (int i = 0; i < episodeIds.length; i++) {
+            Show show = realm.where(Show.class).equalTo("id", i+1).findFirst();
+            if (show != null) {
+                parseEpisodes(episodeIds[i], realm, show);
+            }
+        }
+    }
+
+    private static void parseEpisodes(int episodeId, Realm realm, Show show) {
+        Gson gson = new GsonBuilder()
+                .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
+                .create();
+        String json = fileGetContents(ApplicationController.getInstance(), episodeId);
+        Type listType = new TypeToken<List<Episode>>() {
+        }.getType();
+
+        realm.beginTransaction();
+
+        Season season = realm.createObject(Season.class, show.getId());
+        season.setShow(show);
+        List<Episode> episodeList = gson.fromJson(json.toString(), listType);
+        for (Episode episode : episodeList) {
+            Episode newEpisode = realm.createObject(Episode.class, episode.getId());
+            newEpisode.setTitle(episode.getTitle());
+            newEpisode.setNumber(episode.getNumber());
+            newEpisode.setEmissionDate(episode.getEmissionDate());
+            newEpisode.setOverview(episode.getOverview());
+
+            int seasonNumber = episode.getId() / 10;
+            season.setNumber(seasonNumber);
+
+            newEpisode.setSeason(season);
+        }
+
+        realm.commitTransaction();
+    }
 }

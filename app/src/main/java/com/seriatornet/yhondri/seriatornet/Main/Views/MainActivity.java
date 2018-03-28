@@ -19,6 +19,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.seriatornet.yhondri.seriatornet.Model.APIKey;
+import com.seriatornet.yhondri.seriatornet.Model.DataBase.MockDataManager;
 import com.seriatornet.yhondri.seriatornet.Model.DataBase.Show.Show;
 import com.seriatornet.yhondri.seriatornet.R;
 
@@ -62,9 +63,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-//        Realm realm = Realm.getDefaultInstance();
+    /*   Realm realm = Realm.getDefaultInstance();
+        MockDataManager.parseShows(realm);
+        MockDataManager.parseEpisodes(realm);
+        realm.close();
+*///        Realm realm = Realm.getDefaultInstance();
 //
-//        MockDataManager.mockShows();
+//        MockDataManager.mockShow1s();
 //
 //        RealmResults<Show> shows = realm.where(Show.class).findAll();
 //        Show simpsonsShow = shows.get(0);

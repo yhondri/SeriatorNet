@@ -1,5 +1,8 @@
 package com.seriatornet.yhondri.seriatornet.Main.Adapter;
 
+import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,9 +12,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.seriatornet.yhondri.seriatornet.Model.DataBase.Episode.Episode;
+import com.seriatornet.yhondri.seriatornet.Model.DataBase.Season.Season;
 import com.seriatornet.yhondri.seriatornet.Model.DataBase.Show.Show;
 import com.seriatornet.yhondri.seriatornet.R;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -24,8 +30,11 @@ public class UpcomingRecyclerViewAdapter extends RecyclerView.Adapter<UpcomingRe
 
     private List<Episode> episodes;
     private DateFormat formatter;
-    public UpcomingRecyclerViewAdapter(List<Episode> episodes) {
+    private Context context;
+
+    public UpcomingRecyclerViewAdapter(List<Episode> episodes, Context context) {
         this.episodes = episodes;
+        this.context = context;
         formatter = new SimpleDateFormat("EE MM-yyy HH:mm");
     }
 
@@ -44,10 +53,20 @@ public class UpcomingRecyclerViewAdapter extends RecyclerView.Adapter<UpcomingRe
         // - replace the contents of the view with that element
         Episode episode = episodes.get(position);
         holder.showNameTextView.setText(episode.getSeason().getShow().getName());
-        String episodeName = "S" + Integer.toString(episode.getSeason().getOrder()) + "E" +episode.getNumber();
+        String episodeName = "S" + Integer.toString(episode.getSeason().getNumber()) + "E" +episode.getNumber();
         holder.episodeNameTextView.setText(episodeName);
         String emissionDate = formatter.format(episode.getEmissionDate());
         holder.dateTextView.setText(emissionDate);
+        Drawable poster = getImage(episode.getSeason().getShow().getPoster());
+        holder.posterImageView.setImageDrawable(poster);
+        Drawable banner = getImage(episode.getSeason().getShow().getBanner());
+        holder.backgroundImageView.setImageDrawable(banner);
+    }
+
+    private Drawable getImage(String name) {
+        String  t = name;
+        return context.getResources().getDrawable(context.getResources().getIdentifier(name, "drawable", context.getPackageName()));
+
     }
 
     // Return the size of your dataset (invoked by the layout manager)
