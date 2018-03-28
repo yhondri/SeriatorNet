@@ -8,9 +8,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.seriatornet.yhondri.seriatornet.Model.DataBase.Episode.Episode;
 import com.seriatornet.yhondri.seriatornet.Model.DataBase.Show.Show;
 import com.seriatornet.yhondri.seriatornet.R;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
@@ -19,10 +22,11 @@ import java.util.List;
 
 public class UpcomingRecyclerViewAdapter extends RecyclerView.Adapter<UpcomingRecyclerViewAdapter.ViewHolder> {
 
-    private List<Show> shows;
-
-    public UpcomingRecyclerViewAdapter(List<Show> shows) {
-        shows = shows;
+    private List<Episode> episodes;
+    private DateFormat formatter;
+    public UpcomingRecyclerViewAdapter(List<Episode> episodes) {
+        this.episodes = episodes;
+        formatter = new SimpleDateFormat("EE MM-yyy HH:mm");
     }
 
     // Create new views (invoked by the layout manager)
@@ -38,15 +42,18 @@ public class UpcomingRecyclerViewAdapter extends RecyclerView.Adapter<UpcomingRe
     public void onBindViewHolder(ViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-//        Show show = shows.get(position);
-//        holder.showNameTextView.setText(show.getName());
-//        holder.episodeNameTextView.setText(show.get());
+        Episode episode = episodes.get(position);
+        holder.showNameTextView.setText(episode.getSeason().getShow().getName());
+        String episodeName = "S" + Integer.toString(episode.getSeason().getOrder()) + "E" +episode.getNumber();
+        holder.episodeNameTextView.setText(episodeName);
+        String emissionDate = formatter.format(episode.getEmissionDate());
+        holder.dateTextView.setText(emissionDate);
     }
 
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return 10; //shows.size();
+        return episodes.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -61,7 +68,6 @@ public class UpcomingRecyclerViewAdapter extends RecyclerView.Adapter<UpcomingRe
             super(itemView);
             cardView = itemView.findViewById(R.id.upcoming_cardview);
            showNameTextView = itemView.findViewById(R.id.show_name_textview);
-           episodeNameTextView = itemView.findViewById(R.id.episode_name_textview);
            episodeNameTextView = itemView.findViewById(R.id.episode_name_textview);
            dateTextView = itemView.findViewById(R.id.upcoming_show_date_textview);
            posterImageView = itemView.findViewById(R.id.poster_imageview);

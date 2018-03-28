@@ -1,5 +1,7 @@
 package com.seriatornet.yhondri.seriatornet.Model.DataBase.Show;
 
+import com.seriatornet.yhondri.seriatornet.Model.DataBase.Season.Season;
+
 import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
@@ -21,6 +23,8 @@ public class Show extends RealmObject {
     private String country;
     private String language;
     private String genre;
+
+    private RealmList<Season> seasons;
 
     public void setId(String id) {
         this.id = id;
@@ -77,5 +81,13 @@ public class Show extends RealmObject {
 
     public String getGenre() {
         return genre;
+    }
+
+    public RealmList<Season> getSeasons() {
+        return seasons;
+    }
+
+    public void setSeasons(RealmList<Season> seasons) {
+        this.seasons = seasons;
     }
 }

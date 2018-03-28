@@ -1,8 +1,8 @@
-package com.seriatornet.yhondri.seriatornet.Main;
+package com.seriatornet.yhondri.seriatornet.Main.Views;
 
+import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +13,7 @@ import com.seriatornet.yhondri.seriatornet.R;
  * Created by yhondri on 27/03/2018.
  */
 
-public class ProfileFragment extends Fragment {
+public class DiscoverFragment extends Fragment {
 
     private String mText;
     private int mColor;
@@ -21,7 +21,7 @@ public class ProfileFragment extends Fragment {
     private View mContent;
 
     public static Fragment newInstance() {
-        Fragment frag = new ProfileFragment();
+        Fragment frag = new DiscoverFragment();
 //        Bundle args = new Bundle();
 //        args.putString(ARG_TEXT, text);
 //        args.putInt(ARG_COLOR, color);
@@ -34,7 +34,7 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        return inflater.inflate(R.layout.fragment_profile, container, false);
+        return inflater.inflate(R.layout.fragment_discover, container, false);
     }
 
     @Override

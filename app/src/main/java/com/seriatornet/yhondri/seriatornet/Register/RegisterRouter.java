@@ -3,7 +3,7 @@ package com.seriatornet.yhondri.seriatornet.Register;
 import android.content.Context;
 import android.content.Intent;
 
-import com.seriatornet.yhondri.seriatornet.Main.MainActivity;
+import com.seriatornet.yhondri.seriatornet.Main.Views.MainActivity;
 
 /**
  * Created by yhondri on 27/03/2018.

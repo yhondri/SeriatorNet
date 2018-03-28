@@ -1,4 +1,4 @@
-package com.seriatornet.yhondri.seriatornet.Main;
+package com.seriatornet.yhondri.seriatornet.Main.Views;
 
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -10,18 +10,28 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.seriatornet.yhondri.seriatornet.Main.Adapter.UpcomingRecyclerViewAdapter;
+import com.seriatornet.yhondri.seriatornet.Main.Interactor.UpcomingInteractor;
+import com.seriatornet.yhondri.seriatornet.Main.Presenter.UpcomingPresentation;
+import com.seriatornet.yhondri.seriatornet.Main.Presenter.UpcomingPresenter;
+import com.seriatornet.yhondri.seriatornet.Model.DataBase.Episode.Episode;
 import com.seriatornet.yhondri.seriatornet.R;
+
+import java.util.List;
+
+import io.realm.Realm;
 
 /**
  * Created by yhondri on 27/03/2018.
  */
 
-public class UpcomingFragment extends Fragment {
+public class UpcomingFragment extends Fragment implements UpcomingFragmentView {
 
     private String mText;
     private int mColor;
 
     private View rootView;
+    private UpcomingPresentation presenter;
+    private Realm realm;
 
     public static Fragment newInstance() {
         Fragment frag = new UpcomingFragment();
@@ -40,13 +50,19 @@ public class UpcomingFragment extends Fragment {
             rootView = inflater.inflate(R.layout.fragment_upcoming, container, false);
         }
 
+        realm = Realm.getDefaultInstance();
+
+        UpcomingInteractor upcomingInteractor = new UpcomingInteractor(realm);
+        presenter = new UpcomingPresenter(upcomingInteractor, this);
+
         RecyclerView recyclerView = rootView.findViewById(R.id.upcoming_recycler_view);
         recyclerView.setHasFixedSize(true);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        UpcomingRecyclerViewAdapter adapter = new UpcomingRecyclerViewAdapter(null);
+        List<Episode> episodes = presenter.getEpisodes();
+        UpcomingRecyclerViewAdapter adapter = new UpcomingRecyclerViewAdapter(episodes);
         recyclerView.setAdapter(adapter);
 
         return rootView;
@@ -55,6 +71,8 @@ public class UpcomingFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+
 
         // retrieve text and color from bundle or savedInstanceState
 //        if (savedInstanceState == null) {
@@ -75,4 +93,18 @@ public class UpcomingFragment extends Fragment {
         super.onSaveInstanceState(outState);
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        presenter.onDestroy();
+    }
+
+    //region View implementation
+    @Override
+    public void releaseInstances() {
+        realm.close();
+    }
+
+    //endregion
 }

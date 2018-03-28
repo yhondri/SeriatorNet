@@ -1,4 +1,4 @@
-package com.seriatornet.yhondri.seriatornet.Main;
+package com.seriatornet.yhondri.seriatornet.Main.Views;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.MenuItem;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -20,8 +21,10 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.seriatornet.yhondri.seriatornet.Model.APIKey;
 import com.seriatornet.yhondri.seriatornet.Model.DataBase.Show.Show;
 import com.seriatornet.yhondri.seriatornet.R;
+
 import java.util.List;
 import java.util.Map;
+
 import io.realm.Realm;
 import io.realm.RealmQuery;
 
@@ -58,6 +61,28 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+//        Realm realm = Realm.getDefaultInstance();
+//
+//        MockDataManager.mockShows();
+//
+//        RealmResults<Show> shows = realm.where(Show.class).findAll();
+//        Show simpsonsShow = shows.get(0);
+//        MockDataManager.mockSeasons(simpsonsShow);
+//
+//        RealmResults<Season> seasons = realm.where(Season.class).findAll();
+//        Season season1 = seasons.get(0);
+//        MockDataManager.mockEpisodes(season1);
+//
+//
+//        RealmResults<Episode> episodes = realm.where(Episode.class)
+//                .equalTo("season.id", 1)
+//                .findAll();
+//
+//        for (Episode episode : episodes) {
+//            System.out.println("Name: " +episode.getTitle());
+//        }
+
     }
 
     @Override
@@ -141,7 +166,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         realm.commitTransaction();
-
+        realm.close();
         getAllShows();
     }
 
@@ -151,7 +176,9 @@ public class MainActivity extends AppCompatActivity {
         List<Show> shows = realm.copyFromRealm(query.findAll());
 
         for (Show show : shows) {
-            System.out.println("Show " +show.getName() + "  " +show.getRuntime() + " " + show.getLanguage());
+            System.out.println("Show " + show.getName() + "  " + show.getRuntime() + " " + show.getLanguage());
         }
+
+        realm.close();
     }
 }

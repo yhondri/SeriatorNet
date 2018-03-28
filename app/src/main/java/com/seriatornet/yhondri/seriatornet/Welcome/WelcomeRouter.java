@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.seriatornet.yhondri.seriatornet.Login.LoginActivity;
-import com.seriatornet.yhondri.seriatornet.Main.MainActivity;
+import com.seriatornet.yhondri.seriatornet.Main.Views.MainActivity;
 import com.seriatornet.yhondri.seriatornet.Register.RegisterActivity;
 
 /**
