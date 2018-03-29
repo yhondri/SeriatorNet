@@ -22,6 +22,8 @@ import com.seriatornet.yhondri.seriatornet.Model.APIKey;
 import com.seriatornet.yhondri.seriatornet.Model.DataBase.MockDataManager;
 import com.seriatornet.yhondri.seriatornet.Model.DataBase.Show.Show;
 import com.seriatornet.yhondri.seriatornet.R;
+import com.seriatornet.yhondri.seriatornet.Util.SharedPreferenceKey;
+import com.seriatornet.yhondri.seriatornet.Util.SharedPreferenceUtils;
 
 import java.util.List;
 import java.util.Map;
@@ -63,10 +65,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-//       Realm realm = Realm.getDefaultInstance();
-//        MockDataManager.parseShows(realm);
-//        MockDataManager.parseEpisodes(realm);
-//        realm.close();
+        if (!SharedPreferenceUtils.getInstance(this).getBoolanValue(SharedPreferenceKey.DID_LOAD_DEFAULT_DATA, false)) {
+            Realm realm = Realm.getDefaultInstance();
+            MockDataManager.parseShows(realm);
+            MockDataManager.parseEpisodes(realm);
+            realm.close();
+            SharedPreferenceUtils.getInstance(this).setValue(SharedPreferenceKey.DID_LOAD_DEFAULT_DATA, true);
+        }
     }
 
     @Override

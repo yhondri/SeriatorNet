@@ -70,7 +70,7 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
             }
         });
 
-        mEmailSignInButton = findViewById(R.id.email_sign_in_button);
+        mEmailSignInButton = findViewById(R.id.email_sign_up_button);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {

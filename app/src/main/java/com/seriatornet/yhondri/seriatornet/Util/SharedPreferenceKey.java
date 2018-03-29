@@ -8,5 +8,6 @@ public class SharedPreferenceKey {
 
     public static final String USER_NAME = "USER_NAME";
     public static final String IS_USER_LOGGED_IN = "IS_USER_LOGGED_IN";
+    public static final String DID_LOAD_DEFAULT_DATA = "DID_LOAD_DEFAULT_DATA";
 
 }
