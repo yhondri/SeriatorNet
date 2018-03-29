@@ -1,7 +1,9 @@
 package com.seriatornet.yhondri.seriatornet.Main.Interactor;
 
 import com.seriatornet.yhondri.seriatornet.Model.DataBase.Episode.Episode;
+import com.seriatornet.yhondri.seriatornet.Model.DataBase.Show.Show;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.Realm;
@@ -21,6 +23,17 @@ public class UpcomingInteractor implements UpcomingInteractorInput {
 
     @Override
     public List<Episode> getEpisodes() {
-        return realm.where(Episode.class).findAll();
+        RealmResults<Show> shows = realm.where(Show.class).findAll();
+        List<Episode> episodes = new ArrayList<>();
+
+        for (Show show : shows) {
+            Episode episode = realm.where(Episode.class)
+                    .equalTo("season.show.id", show.getId())
+                    .sort("emissionDate")
+                    .findFirst();
+            episodes.add(episode);
+        }
+
+        return episodes;
     }
 }
