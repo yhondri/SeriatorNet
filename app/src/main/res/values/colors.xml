@@ -7,6 +7,7 @@
     <color name="light_gray">#38FFFFFF</color>
     <color name="text_light_gray">#A6FFFFFF</color>
 
-    <color name="cardview_semitransparent_dark_background">#38000000</color>
+    <!-- alpha 75%-->
+    <color name="cardview_semitransparent_dark_background">#BF000000</color>
 
 </resources>

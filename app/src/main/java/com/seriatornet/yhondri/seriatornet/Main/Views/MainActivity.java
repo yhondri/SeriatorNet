@@ -67,27 +67,6 @@ public class MainActivity extends AppCompatActivity {
 //        MockDataManager.parseShows(realm);
 //        MockDataManager.parseEpisodes(realm);
 //        realm.close();
-//        Realm realm = Realm.getDefaultInstance();
-//
-//        MockDataManager.mockShow1s();
-//
-//        RealmResults<Show> shows = realm.where(Show.class).findAll();
-//        Show simpsonsShow = shows.get(0);
-//        MockDataManager.mockSeasons(simpsonsShow);
-//
-//        RealmResults<Season> seasons = realm.where(Season.class).findAll();
-//        Season season1 = seasons.get(0);
-//        MockDataManager.mockEpisodes(season1);
-//
-//
-//        RealmResults<Episode> episodes = realm.where(Episode.class)
-//                .equalTo("season.id", 1)
-//                .findAll();
-//
-//        for (Episode episode : episodes) {
-//            System.out.println("Name: " +episode.getTitle());
-//        }
-
     }
 
     @Override
@@ -97,31 +76,31 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed() {
-
-
-    }
+    public void onBackPressed() {}
 
     private void selectFragment(int itemId) {
         Fragment fragment = null;
+        String toolBarTitle = null;
         // init corresponding fragment
         switch (itemId) {
             case R.id.action_watching:
                 fragment = UpcomingFragment.newInstance();
+                toolBarTitle = getString(R.string.upcoming);
                 break;
             case R.id.action_search:
                 fragment = DiscoverFragment.newInstance();
-
+                toolBarTitle = getString(R.string.search);
                 break;
             case R.id.action_profile:
                 fragment = ProfileFragment.newInstance();
+                toolBarTitle = getString(R.string.profile);
                 break;
         }
 
         // update selected item
         mSelectedItem = itemId;
 
-        updateToolbarText("....");
+        updateToolbarText(toolBarTitle);
 
         if (fragment != null) {
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
