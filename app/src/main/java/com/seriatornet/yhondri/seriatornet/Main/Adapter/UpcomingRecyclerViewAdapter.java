@@ -54,20 +54,32 @@ public class UpcomingRecyclerViewAdapter extends RecyclerView.Adapter<UpcomingRe
         // - replace the contents of the view with that element
         Episode episode = episodes.get(position);
         holder.showNameTextView.setText(episode.getSeason().getShow().getName());
-        String episodeName = "S" + Integer.toString(episode.getSeason().getNumber()) + "E" +episode.getNumber();
-        holder.episodeNameTextView.setText(episodeName);
         String emissionDate = formatter.format(episode.getEmissionDate());
         holder.dateTextView.setText(emissionDate);
         Drawable poster = getImage(episode.getSeason().getShow().getPoster());
         holder.posterImageView.setImageDrawable(poster);
         Drawable banner = getImage(episode.getSeason().getShow().getBanner());
         holder.backgroundImageView.setImageDrawable(banner);
+
+        String episodeName = "S";
+
+        if (episode.getSeason().getNumber() < 10) {
+            episodeName += "0" + Integer.toString(episode.getSeason().getNumber());
+        } else {
+            episodeName += Integer.toString(episode.getSeason().getNumber());
+        }
+
+        if (episode.getNumber() < 10) {
+            episodeName += "E0" + Integer.toString(episode.getNumber());
+        } else {
+            episodeName += "E" + Integer.toString(episode.getNumber());
+        }
+
+        holder.episodeNameTextView.setText(episodeName);
     }
 
     private Drawable getImage(String name) {
-        String  t = name;
         return context.getResources().getDrawable(context.getResources().getIdentifier(name, "drawable", context.getPackageName()));
-
     }
 
     // Return the size of your dataset (invoked by the layout manager)
