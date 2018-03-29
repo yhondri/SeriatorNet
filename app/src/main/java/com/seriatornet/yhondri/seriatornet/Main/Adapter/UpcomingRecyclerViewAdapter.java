@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -35,7 +36,7 @@ public class UpcomingRecyclerViewAdapter extends RecyclerView.Adapter<UpcomingRe
     public UpcomingRecyclerViewAdapter(List<Episode> episodes, Context context) {
         this.episodes = episodes;
         this.context = context;
-        formatter = new SimpleDateFormat("EE MM-yyy HH:mm");
+        formatter = new SimpleDateFormat("EE dd-MM-yyyy HH:mm");
     }
 
     // Create new views (invoked by the layout manager)

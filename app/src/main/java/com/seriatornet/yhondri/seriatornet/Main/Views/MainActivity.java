@@ -63,11 +63,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-    /*   Realm realm = Realm.getDefaultInstance();
-        MockDataManager.parseShows(realm);
-        MockDataManager.parseEpisodes(realm);
-        realm.close();
-*///        Realm realm = Realm.getDefaultInstance();
+//       Realm realm = Realm.getDefaultInstance();
+//        MockDataManager.parseShows(realm);
+//        MockDataManager.parseEpisodes(realm);
+//        realm.close();
+//        Realm realm = Realm.getDefaultInstance();
 //
 //        MockDataManager.mockShow1s();
 //
