@@ -18,6 +18,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.microsoft.appcenter.AppCenter;
+import com.microsoft.appcenter.analytics.Analytics;
+import com.microsoft.appcenter.crashes.Crashes;
 import com.seriatornet.yhondri.seriatornet.Model.APIKey;
 import com.seriatornet.yhondri.seriatornet.Model.DataBase.MockDataManager;
 import com.seriatornet.yhondri.seriatornet.Model.DataBase.Show.Show;
@@ -72,6 +75,9 @@ public class MainActivity extends AppCompatActivity {
             realm.close();
             SharedPreferenceUtils.getInstance(this).setValue(SharedPreferenceKey.DID_LOAD_DEFAULT_DATA, true);
         }
+
+        AppCenter.start(getApplication(), "8d96ca8b-ae7d-4fd5-8b06-b7828748155e",
+                Analytics.class, Crashes.class);
     }
 
     @Override
