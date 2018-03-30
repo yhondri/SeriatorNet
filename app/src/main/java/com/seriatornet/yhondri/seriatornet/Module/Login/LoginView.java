@@ -8,9 +8,9 @@ public interface LoginView {
 
     void resetFieldsErrors();
 
-    void showInvalidPasswordError(String message);
+    void showInvalidPasswordError(int message);
 
-    void showInvalidEmailError(String message);
+    void showInvalidEmailError(int message);
 
     void onProgressBar(final Boolean isHidden);
 

@@ -84,8 +84,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderManager.Lo
 
         populateAutoComplete();
 
+        LoginInteractorInput interactor = new LoginInteractor(this);
         FirebaseOauthService firebaseOauthService = new FirebaseOauthService();
-        presenter = new LoginPresenter(this, new LoginRouter(this), firebaseOauthService, this);
+        presenter = new LoginPresenter(this, new LoginRouter(this), interactor, firebaseOauthService);
     }
 
     //region Autocomplete
@@ -158,14 +159,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderManager.Lo
     }
 
     @Override
-    public void showInvalidPasswordError(String message) {
-        mPasswordView.setError(message);
+    public void showInvalidPasswordError(int message) {
+        mPasswordView.setError(getString(message));
         mPasswordView.requestFocus();
     }
 
     @Override
-    public void showInvalidEmailError(String message) {
-        mEmailView.setError(message);
+    public void showInvalidEmailError(int message) {
+        mEmailView.setError(getString(message));
         mEmailView.requestFocus();
     }
 
