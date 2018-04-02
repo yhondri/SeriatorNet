@@ -23,11 +23,7 @@ jobs:
     
     steps:
       - checkout
-
-    dependencies:
-      override:
-        - echo y | android update sdk --no-ui --all --filter build-tools-26.0.2,android-26
-
+      - sh accept_android_licenses.sh
       # Download and cache dependencies
       - restore_cache:
           keys:
