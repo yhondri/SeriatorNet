@@ -6,7 +6,6 @@ import com.seriatornet.yhondri.seriatornet.Model.DataBase.Show.Show;
 import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
-import io.realm.annotations.Required;
 
 /**
  * Created by yhondri on 26/03/2018.
@@ -16,9 +15,7 @@ public class Season extends RealmObject {
 
     @PrimaryKey
     private int id;
-    @Required
-    private String name;
-    private int order;
+    private int number;
     private Show show;
     private RealmList<Episode> episodes;
 
@@ -30,20 +27,12 @@ public class Season extends RealmObject {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public int getNumber() {
+        return number;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getOrder() {
-        return order;
-    }
-
-    public void setOrder(int order) {
-        this.order = order;
+    public void setNumber(int number) {
+        this.number = number;
     }
 
     public Show getShow() {

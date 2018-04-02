@@ -14,19 +14,20 @@ import io.realm.annotations.Required;
 public class Show extends RealmObject {
 
     @PrimaryKey
-    private String id;
+    private int id;
     @Required
     private String name;
-    @Required
-    private String description;
-    private int runtime;
     private String country;
+    private int runtime;
+    @Required
     private String language;
     private String genre;
-
+    private String poster;
+    private String banner;
+    private String description;
     private RealmList<Season> seasons;
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -66,7 +67,7 @@ public class Show extends RealmObject {
         return runtime;
     }
 
-    public String getId() {
+    public int getId() {
 
         return id;
     }
@@ -81,6 +82,22 @@ public class Show extends RealmObject {
 
     public String getGenre() {
         return genre;
+    }
+
+    public String getPoster() {
+        return poster;
+    }
+
+    public void setPoster(String poster) {
+        this.poster = poster;
+    }
+
+    public String getBanner() {
+        return banner;
+    }
+
+    public void setBanner(String banner) {
+        this.banner = banner;
     }
 
     public RealmList<Season> getSeasons() {

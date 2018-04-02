@@ -16,19 +16,19 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".Main.Views.MainActivity"
+            android:name=".Module.Main.Views.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Login.LoginActivity"
+            android:name=".Module.Login.LoginActivity"
             android:label="@string/login"
             android:noHistory="true"/>
         <activity
-            android:name=".Register.RegisterActivity"
+            android:name=".Module.Register.RegisterActivity"
             android:label="@string/title_activity_register"
             android:noHistory="true"/>
         <activity
-            android:name=".Welcome.WelcomeActivity"
+            android:name=".Module.Welcome.WelcomeActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter android:label="@string/app_name">
