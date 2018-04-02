@@ -23,7 +23,6 @@ jobs:
     
     steps:
       - checkout
-      - sh accept_android_licenses.sh
       # Download and cache dependencies
       - restore_cache:
           keys:
