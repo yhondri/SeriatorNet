@@ -37,10 +37,13 @@ jobs:
           paths:
             - ~/.gradle
           key: v1-dependencies-{{ checksum "build.gradle" }}
+
+    post:
+      - cp -r licenses/. $ANDROID_HOME/licenses
         
       # run tests!
       - run: gradle connectedAndroidTest
-      - run: gradle test
+      #- run: gradle test
 
 
 
