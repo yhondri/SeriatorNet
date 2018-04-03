@@ -1,12 +1,19 @@
 package com.seriatornet.yhondri.seriatornet.Module.Main.Adapter;
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -50,10 +57,14 @@ public class UpcomingRecyclerViewAdapter extends RecyclerView.Adapter<UpcomingRe
         holder.showNameTextView.setText(episode.getSeason().getShow().getName());
         String emissionDate = formatter.format(episode.getEmissionDate());
         holder.dateTextView.setText(emissionDate);
-        Drawable poster = getImage(episode.getSeason().getShow().getPoster());
-        holder.posterImageView.setImageDrawable(poster);
+
+        Drawable posterDrawable = getImage(episode.getSeason().getShow().getPoster());
+        Bitmap posterBitmap = drawableToBitmap(posterDrawable);
+        holder.posterImageView.setImageBitmap(posterBitmap);
+
         Drawable banner = getImage(episode.getSeason().getShow().getBanner());
-        holder.backgroundImageView.setImageDrawable(banner);
+        Bitmap bannerBitmap = drawableToBitmap(banner);
+        holder.backgroundImageView.setImageBitmap(bannerBitmap);
 
         String episodeName = "S";
 
@@ -70,6 +81,24 @@ public class UpcomingRecyclerViewAdapter extends RecyclerView.Adapter<UpcomingRe
         }
 
         holder.episodeNameTextView.setText(episodeName);
+    }
+
+    public static Bitmap drawableToBitmap(Drawable drawable) {
+        if (drawable instanceof BitmapDrawable) {
+            return ((BitmapDrawable) drawable).getBitmap();
+        }
+
+        int width = drawable.getIntrinsicWidth();
+        width = width > 0 ? width : 1;
+        int height = drawable.getIntrinsicHeight();
+        height = height > 0 ? height : 1;
+
+        Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+        drawable.draw(canvas);
+
+        return bitmap;
     }
 
     private Drawable getImage(String name) {
@@ -90,14 +119,14 @@ public class UpcomingRecyclerViewAdapter extends RecyclerView.Adapter<UpcomingRe
         ImageView posterImageView;
         ImageView backgroundImageView;
 
-       public ViewHolder(View itemView) {
+        public ViewHolder(View itemView) {
             super(itemView);
             cardView = itemView.findViewById(R.id.upcoming_cardview);
-           showNameTextView = itemView.findViewById(R.id.show_name_textview);
-           episodeNameTextView = itemView.findViewById(R.id.episode_name_textview);
-           dateTextView = itemView.findViewById(R.id.upcoming_show_date_textview);
-           posterImageView = itemView.findViewById(R.id.poster_imageview);
-           backgroundImageView = itemView.findViewById(R.id.upcoming_show_background_imageview);
-       }
+            showNameTextView = itemView.findViewById(R.id.show_name_textview);
+            episodeNameTextView = itemView.findViewById(R.id.episode_name_textview);
+            dateTextView = itemView.findViewById(R.id.upcoming_show_date_textview);
+            posterImageView = itemView.findViewById(R.id.poster_imageview);
+            backgroundImageView = itemView.findViewById(R.id.upcoming_show_background_imageview);
+        }
     }
 }
