@@ -24,7 +24,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/mrrobot_banner"
                     tools:layout_editor_absoluteX="8dp"
                     tools:layout_editor_absoluteY="8dp" />
 
@@ -41,8 +40,7 @@
                 android:layout_height="100dp"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="8dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/mrrobot_poster" />
+                android:scaleType="centerCrop" />
 
             <TextView
                 android:id="@+id/show_name_textview"
