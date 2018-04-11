@@ -5,5 +5,8 @@ package com.seriatornet.yhondri.seriatornet.Module.Welcome;
  */
 
 public interface WelcomeView {
+    /**
+     * Método que se llama cuando el usuario hace una transición hacía otra actividad.
+     */
     void finishActivity();
 }

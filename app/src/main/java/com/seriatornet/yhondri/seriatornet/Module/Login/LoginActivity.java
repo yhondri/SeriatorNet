@@ -90,6 +90,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderManager.Lo
     }
 
     //region Autocomplete
+
+    /**
+     * Analiza si es necesario solicitar permiso para acceder a los contactos del dispositivo.
+     */
     private void populateAutoComplete() {
         if (!mayRequestContacts()) {
             return;
@@ -98,6 +102,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderManager.Lo
         getLoaderManager().initLoader(0, null, this);
     }
 
+    /**
+     * Verifíca si se ha solicitado el acceso a los contactos del usuario.
+     * @return devuelve Yes or No, dependiendo de si es necesario mostrar la petición de permiso
+     * para acceder a los contactos.
+     */
     private boolean mayRequestContacts() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             return true;
@@ -136,6 +145,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderManager.Lo
         }
     }
 
+    /**
+     * Método que se llama cuando el usuario pulsa el botón de Login.
+     */
     private void attemptLogin() {
 
         // Reset errors.

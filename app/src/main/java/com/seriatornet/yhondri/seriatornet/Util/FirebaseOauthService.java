@@ -10,9 +10,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.seriatornet.yhondri.seriatornet.Model.DataBase.User;
 
 /**
- * Created by yhondri on 30/3/18.
+ * Implementación de un servicio OAUTH adaptado a Seriator.
  */
-
 public class FirebaseOauthService implements OauthService, OnCompleteListener<AuthResult> {
 
     private FirebaseAuth firebaseAuth;

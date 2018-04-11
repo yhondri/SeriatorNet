@@ -10,5 +10,9 @@ import java.util.List;
 
 public interface UpcomingInteractorInput {
 
+    /**
+     * Obitiene la lista de los episodios que le faltan por ver al usuario.
+     * @return la lista de episodios.
+     */
     List<Episode> getEpisodes();
 }

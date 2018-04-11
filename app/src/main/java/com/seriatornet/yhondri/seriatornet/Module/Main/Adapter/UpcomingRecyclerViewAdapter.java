@@ -83,6 +83,11 @@ public class UpcomingRecyclerViewAdapter extends RecyclerView.Adapter<UpcomingRe
         holder.episodeNameTextView.setText(episodeName);
     }
 
+    /**
+     * Convierte un drawable a bitmap adaptándolo a la densidad de píxeles del dispositivo.
+     * @param drawable Drawable a convertir.
+     * @return bitmap recibido.
+     */
     public static Bitmap drawableToBitmap(Drawable drawable) {
         if (drawable instanceof BitmapDrawable) {
             return ((BitmapDrawable) drawable).getBitmap();
@@ -101,6 +106,11 @@ public class UpcomingRecyclerViewAdapter extends RecyclerView.Adapter<UpcomingRe
         return bitmap;
     }
 
+    /**
+     * Obtiene una imagen a partir de su nombre.
+     * @param name nombre de la imagen.
+     * @return Drawabe obtenido.
+     */
     private Drawable getImage(String name) {
         return context.getResources().getDrawable(context.getResources().getIdentifier(name, "drawable", context.getPackageName()));
     }

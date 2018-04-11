@@ -5,5 +5,8 @@ package com.seriatornet.yhondri.seriatornet.Module.Main.Views;
  */
 
 public interface UpcomingFragmentView {
+    /**
+     * Libera instancias para liberar memory leaks.
+     */
     void releaseInstances();
 }

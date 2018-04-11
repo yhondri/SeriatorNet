@@ -5,7 +5,16 @@ package com.seriatornet.yhondri.seriatornet.Module.Welcome;
  */
 
 public interface WelcomeWireframe {
+    /**
+     * Método que crea una transición hacía el MainActivity.
+     */
     void showMainActivity();
+    /**
+     * Método que crea una transición hacía el LoginActivity.
+     */
     void showLoginActivity();
+    /**
+     * Método que crea una transición hacía el RegisterActivity.
+     */
     void showRegisterActivity();
 }

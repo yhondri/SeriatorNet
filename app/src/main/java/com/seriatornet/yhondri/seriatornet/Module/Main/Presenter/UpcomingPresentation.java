@@ -9,6 +9,14 @@ import java.util.List;
  */
 
 public interface UpcomingPresentation {
+    /**
+     * Método que se llama cuando la actividad se va a destruir.
+     */
     void onDestroy();
+
+    /**
+     * Método que devuelve una lista de episódios.
+     * @return una lista de episodios.
+     */
     List<Episode> getEpisodes();
 }
