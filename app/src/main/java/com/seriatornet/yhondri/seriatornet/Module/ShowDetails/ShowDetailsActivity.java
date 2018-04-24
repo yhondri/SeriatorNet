@@ -68,7 +68,7 @@ public class ShowDetailsActivity extends AppCompatActivity {
         TextView genreTextView = findViewById(R.id.genreTextView);
         genreTextView.setText(show.getGenre());
         TextView showDescriptionTV = findViewById(R.id.showDescriptionTV);
-        showDescriptionTV.setText(show.getDescription());
+//        showDescriptionTV.setText(show.getDescription());
 
         ProgressBar scoreProgressBar = findViewById(R.id.scoreProgressBar);
         scoreProgressBar.setProgress(52);
