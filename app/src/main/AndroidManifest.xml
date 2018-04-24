@@ -22,11 +22,11 @@
         <activity
             android:name=".Module.Login.LoginActivity"
             android:label="@string/login"
-            android:noHistory="true"/>
+            android:noHistory="true" />
         <activity
             android:name=".Module.Register.RegisterActivity"
             android:label="@string/title_activity_register"
-            android:noHistory="true"/>
+            android:noHistory="true" />
         <activity
             android:name=".Module.Welcome.WelcomeActivity"
             android:label="@string/app_name"
@@ -37,6 +37,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".Module.ShowDetails.ShowDetailsActivity"
+            android:label="@string/title_activity_show_details"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

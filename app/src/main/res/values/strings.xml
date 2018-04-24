@@ -37,4 +37,14 @@
     <string name="register_completed_message">Welcome %1$s</string>
     <string name="password_help">La contraseña debe contener 5 o más carácteres e incluir letras mayúsculas y minúsculas, y al menos 1 número.</string>
     <string name="action_sign_in_short">Sign in</string>
+    <string name="title_activity_show_details">ShowDetailsActivity</string>
+
+
+    <!-- Delete this -->
+    <string name="temp_simpsons_description">Set in Springfield, the average American town, the show focuses on
+        the antics and everyday adventures of the Simpson family; Homer,
+        Marge, Bart, Lisa and Maggie, as well as a virtual cast of thousands. Since the beginning,
+        the series has been a pop culture icon, attracting hundreds of celebrities to guest star.
+        The show has also made name for itself in its fearless satirical take on politics,
+        media and American life in general.</string>
 </resources>

@@ -160,7 +160,6 @@ public class MainActivity extends AppCompatActivity {
             show.setRuntime(((Long) showMap.get(APIKey.RUNTIME)).intValue());
             show.setLanguage((String) showMap.get(APIKey.LANGUAGE));
             show.setGenre((String) showMap.get(APIKey.GENRE));
-
         }
 
         realm.commitTransaction();
