@@ -7,6 +7,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -22,6 +23,8 @@ public class ShowDetailsActivity extends AppCompatActivity {
 
     private Realm realm;
     private Show show;
+    private ImageButton likeImageButton;
+    private ImageButton dislikeImageButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,5 +72,21 @@ public class ShowDetailsActivity extends AppCompatActivity {
 
         ProgressBar scoreProgressBar = findViewById(R.id.scoreProgressBar);
         scoreProgressBar.setProgress(52);
+
+        likeImageButton = findViewById(R.id.likeImageButton);
+        dislikeImageButton = findViewById(R.id.dislikeImageButton);
+        likeImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                likeImageButton.setImageResource(R.drawable.ic_like_filled);
+            }
+        });
+
+        dislikeImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dislikeImageButton.setImageResource(R.drawable.ic_dislike_filled);
+            }
+        });
     }
 }
