@@ -92,7 +92,6 @@ public class MainActivity extends AppCompatActivity {
     private void selectFragment(int itemId) {
         Fragment fragment = null;
         String toolBarTitle = null;
-        // init corresponding fragment
         switch (itemId) {
             case R.id.action_watching:
                 fragment = UpcomingFragment.newInstance();
@@ -101,6 +100,10 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_search:
                 fragment = DiscoverFragment.newInstance();
                 toolBarTitle = getString(R.string.search);
+                break;
+            case R.id.action_show:
+                fragment = ShowsFragment.newInstance();
+                toolBarTitle = getString(R.string.shows);
                 break;
             case R.id.action_profile:
                 fragment = ProfileFragment.newInstance();

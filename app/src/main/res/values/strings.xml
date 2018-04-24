@@ -8,6 +8,7 @@
     <!-- Main Menu -->
     <string name="upcoming">Próximos</string>
     <string name="search">Buscar</string>
+    <string name="shows">Series</string>
     <string name="profile">Perfil</string>
     <string name="title_activity_register">Registro</string>
 
