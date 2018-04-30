@@ -40,6 +40,10 @@
         <activity
             android:name=".Module.ShowDetails.ShowDetailsActivity"
             android:label="@string/title_activity_show_details"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Module.Profile.ProfileActivity"
+            android:label="@string/title_activity_profile"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
