@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.seriatornet.yhondri.seriatornet.Model.DataBase.Episode.Episode;
 import com.seriatornet.yhondri.seriatornet.R;
+import com.seriatornet.yhondri.seriatornet.Util.Utils;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -58,12 +59,12 @@ public class UpcomingRecyclerViewAdapter extends RecyclerView.Adapter<UpcomingRe
         String emissionDate = formatter.format(episode.getEmissionDate());
         holder.dateTextView.setText(emissionDate);
 
-        Drawable posterDrawable = getImage(episode.getSeason().getShow().getPoster());
-        Bitmap posterBitmap = drawableToBitmap(posterDrawable);
+        Drawable posterDrawable = Utils.getImage(episode.getSeason().getShow().getPoster(), context);
+        Bitmap posterBitmap = Utils.drawableToBitmap(posterDrawable);
         holder.posterImageView.setImageBitmap(posterBitmap);
 
-        Drawable banner = getImage(episode.getSeason().getShow().getBanner());
-        Bitmap bannerBitmap = drawableToBitmap(banner);
+        Drawable banner = Utils.getImage(episode.getSeason().getShow().getBanner(), context);
+        Bitmap bannerBitmap = Utils.drawableToBitmap(banner);
         holder.backgroundImageView.setImageBitmap(bannerBitmap);
 
         String episodeName = "S";
@@ -81,38 +82,6 @@ public class UpcomingRecyclerViewAdapter extends RecyclerView.Adapter<UpcomingRe
         }
 
         holder.episodeNameTextView.setText(episodeName);
-    }
-
-    /**
-     * Convierte un drawable a bitmap adaptándolo a la densidad de píxeles del dispositivo.
-     * @param drawable Drawable a convertir.
-     * @return bitmap recibido.
-     */
-    public static Bitmap drawableToBitmap(Drawable drawable) {
-        if (drawable instanceof BitmapDrawable) {
-            return ((BitmapDrawable) drawable).getBitmap();
-        }
-
-        int width = drawable.getIntrinsicWidth();
-        width = width > 0 ? width : 1;
-        int height = drawable.getIntrinsicHeight();
-        height = height > 0 ? height : 1;
-
-        Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(bitmap);
-        drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
-        drawable.draw(canvas);
-
-        return bitmap;
-    }
-
-    /**
-     * Obtiene una imagen a partir de su nombre.
-     * @param name nombre de la imagen.
-     * @return Drawabe obtenido.
-     */
-    private Drawable getImage(String name) {
-        return context.getResources().getDrawable(context.getResources().getIdentifier(name, "drawable", context.getPackageName()));
     }
 
     // Return the size of your dataset (invoked by the layout manager)
