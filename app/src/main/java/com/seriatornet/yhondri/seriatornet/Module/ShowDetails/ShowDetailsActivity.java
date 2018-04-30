@@ -41,8 +41,9 @@ public class ShowDetailsActivity extends AppCompatActivity {
 
         realm = Realm.getDefaultInstance();
 
+        ShowDetailsWireframe router = new ShowDetailsRouter(this);
         ShowDetailsInteractorInput interactor = new ShowDetailsInteractor(realm);
-        ShowDetailsPresentation presenter = new ShowDetailsPresenter(interactor);
+        final ShowDetailsPresentation presenter = new ShowDetailsPresenter(interactor, router);
 
         int showId = getIntent().getIntExtra(AppKey.SHOW_ID, 0);
         show = presenter.getShowWithId(showId);
@@ -59,8 +60,9 @@ public class ShowDetailsActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+                presenter.goToEpisodesList();
             }
         });
     }

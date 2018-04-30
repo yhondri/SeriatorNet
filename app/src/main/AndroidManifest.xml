@@ -44,6 +44,10 @@
         <activity
             android:name=".Module.Profile.ProfileActivity"
             android:label="@string/title_activity_profile"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Module.Episodes.EpisodesActivity"
+            android:label="@string/title_activity_episodes"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

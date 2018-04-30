@@ -39,6 +39,11 @@
     <string name="action_sign_in_short">Sign in</string>
     <string name="title_activity_show_details">ShowDetailsActivity</string>
 
+    <!-- Profile -->
+    <string name="log_out">Salir</string>
+    <string name="like">Te gustan</string>
+    <string name="seen">Capítulos vistos</string>
+    <string name="following">Siguiendo</string>
 
     <!-- Delete this -->
     <string name="temp_simpsons_description">Set in Springfield, the average American town, the show focuses on
@@ -53,4 +58,5 @@
         The show has also made name for itself in its fearless satirical take on politics,
         media and American life in general.</string>
     <string name="title_activity_profile">ProfileActivity</string>
+    <string name="title_activity_episodes">EpisodesActivity</string>
 </resources>

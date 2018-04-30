@@ -6,6 +6,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.seriatornet.yhondri.seriatornet.R;
 
@@ -15,10 +17,8 @@ import com.seriatornet.yhondri.seriatornet.R;
 
 public class ProfileFragment extends Fragment {
 
-    private String mText;
-    private int mColor;
+    private View rootView;
 
-    private View mContent;
 
     public static Fragment newInstance() {
         Fragment frag = new ProfileFragment();
@@ -32,32 +32,25 @@ public class ProfileFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
 
-        return inflater.inflate(R.layout.fragment_profile, container, false);
+        if (rootView == null) {
+            rootView = inflater.inflate(R.layout.fragment_profile, container, false);
+        }
+
+        TextView followingEpisodesTextView = rootView.findViewById(R.id.followingCounterTextView);
+        TextView seenEpisodesTextView = rootView.findViewById(R.id.seenEpisodesTextView);
+        TextView likesCounterTextView = rootView.findViewById(R.id.likesCounterTextView);
+
+        ImageView profileImageView = rootView.findViewById(R.id.profileImageView);
+
+        return rootView;
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // retrieve text and color from bundle or savedInstanceState
-//        if (savedInstanceState == null) {
-//            Bundle args = getArguments();
-//            mText = args.getString(ARG_TEXT);
-//            mColor = args.getInt(ARG_COLOR);
-//        } else {
-//            mText = savedInstanceState.getString(ARG_TEXT);
-//            mColor = savedInstanceState.getInt(ARG_COLOR);
-//        }
 
-        // initialize views
-//        mContent = view.findViewById(R.id.contentView);
-//        mTextView = (TextView) view.findViewById(R.id.text);
-
-        // set text and background color
-//        mTextView.setText(mText);
-//        mContent.setBackgroundColor(mColor);
     }
 
     @Override
@@ -65,5 +58,9 @@ public class ProfileFragment extends Fragment {
 //        outState.putString(ARG_TEXT, mText);
 //        outState.putInt(ARG_COLOR, mColor);
         super.onSaveInstanceState(outState);
+    }
+
+    private void setUpView() {
+
     }
 }

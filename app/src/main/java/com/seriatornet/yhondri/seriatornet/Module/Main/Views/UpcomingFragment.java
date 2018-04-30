@@ -72,8 +72,6 @@ public class UpcomingFragment extends Fragment implements UpcomingFragmentView {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
-
         // retrieve text and color from bundle or savedInstanceState
 //        if (savedInstanceState == null) {
 //            Bundle args = getArguments();
