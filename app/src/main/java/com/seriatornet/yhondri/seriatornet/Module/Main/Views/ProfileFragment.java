@@ -19,7 +19,6 @@ public class ProfileFragment extends Fragment {
 
     private View rootView;
 
-
     public static Fragment newInstance() {
         Fragment frag = new ProfileFragment();
 //        Bundle args = new Bundle();

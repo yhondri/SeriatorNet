@@ -45,6 +45,26 @@
     <string name="seen">Capítulos vistos</string>
     <string name="following">Siguiendo</string>
 
+    <!-- Discover fragment -->
+
+    <string-array name="shows_categories">
+        <item>Action</item>
+        <item>Adventure</item>
+        <item>Anime</item>
+        <item>Comedy</item>
+        <item>Crime</item>
+        <item>Documental</item>
+        <item>Drama</item>
+        <item>Fantasy</item>
+        <item>Romantics</item>
+        <item>Science Fiction</item>
+        <item>Terror</item>
+        <item>Thrillers</item>
+
+    </string-array>
+
+    <string name="No_shows_with_selected_genre">Aún no tenemos series con este género.</string>
+
     <!-- Delete this -->
     <string name="temp_simpsons_description">Set in Springfield, the average American town, the show focuses on
         the antics and everyday adventures of the Simpson family; Homer,

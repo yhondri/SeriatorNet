@@ -75,4 +75,14 @@ public class ShowRecyclerViewAdapter extends RecyclerView.Adapter<ShowRecyclerVi
             backgroundImageView = itemView.findViewById(R.id.show_background_imageview);
         }
     }
+
+    public void refreshData(List<Show> shows) {
+        this.shows.clear();
+        this.shows.addAll(shows);
+        notifyDataSetChanged();
+    }
+
+    public Show getItemAt(int position) {
+        return shows.get(position);
+    }
 }

@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
     private int mSelectedItem;
     private BottomNavigationView mBottomNav;
+    private OnBackPressedListener onBackPressedListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,9 +76,6 @@ public class MainActivity extends AppCompatActivity {
             realm.close();
             SharedPreferenceUtils.getInstance(this).setValue(SharedPreferenceKey.DID_LOAD_DEFAULT_DATA, true);
         }
-
-        AppCenter.start(getApplication(), "8d96ca8b-ae7d-4fd5-8b06-b7828748155e",
-                Analytics.class, Crashes.class);
     }
 
     @Override
@@ -87,7 +85,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed() {}
+    public void onBackPressed() {
+        onBackPressedListener.onBackPressed();
+    }
 
     private void selectFragment(int itemId) {
         Fragment fragment = null;
@@ -99,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.action_search:
                 fragment = DiscoverFragment.newInstance();
+                onBackPressedListener = (DiscoverFragment) fragment;
                 toolBarTitle = getString(R.string.search);
                 break;
             case R.id.action_show:
