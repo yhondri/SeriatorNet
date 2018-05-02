@@ -34,6 +34,11 @@ public class FirebaseOauthService implements OauthService, OnCompleteListener<Au
     }
 
     @Override
+    public void LogOut() {
+        firebaseAuth.signOut();
+    }
+
+    @Override
     public void onComplete(@NonNull Task<AuthResult> task) {
         FirebaseUser user = task.getResult().getUser();
         User newUser = new User(user.getDisplayName(), user.getEmail());

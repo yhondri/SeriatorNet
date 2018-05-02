@@ -24,4 +24,6 @@ public interface OauthService {
      * @param listener listener al que se avisará cuando se reciba la respuesta del servidor.
      */
     void createUserWithEmailAndPassword(String email, String password, OauthServiceResult listener);
+
+    void LogOut();
 }

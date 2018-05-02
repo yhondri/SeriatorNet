@@ -1,5 +1,6 @@
 package com.seriatornet.yhondri.seriatornet.Module.Main.Views;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -9,7 +10,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.seriatornet.yhondri.seriatornet.Module.Login.LoginActivity;
 import com.seriatornet.yhondri.seriatornet.R;
+import com.seriatornet.yhondri.seriatornet.Util.FirebaseOauthService;
 
 /**
  * Created by yhondri on 27/03/2018.
@@ -39,8 +42,16 @@ public class ProfileFragment extends Fragment {
         TextView followingEpisodesTextView = rootView.findViewById(R.id.followingCounterTextView);
         TextView seenEpisodesTextView = rootView.findViewById(R.id.seenEpisodesTextView);
         TextView likesCounterTextView = rootView.findViewById(R.id.likesCounterTextView);
-
         ImageView profileImageView = rootView.findViewById(R.id.profileImageView);
+        rootView.findViewById(R.id.logOutButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseOauthService firebaseOauthService = new FirebaseOauthService();
+                getActivity().finish();
+                Intent loginIntent = new Intent(getActivity(), LoginActivity.class);
+                getActivity().startActivity(loginIntent);
+            }
+        });
 
         return rootView;
     }
