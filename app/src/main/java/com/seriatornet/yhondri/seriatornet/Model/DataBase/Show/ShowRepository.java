@@ -13,13 +13,13 @@ public class ShowRepository implements IShowRepository {
         Realm realm = Realm.getDefaultInstance();
         realm.beginTransaction();
 
-        Show newShow = realm.createObject(Show.class, show.getId());
-        newShow.setName(show.getName());
-        newShow.setDescription(show.getDescription());
-        newShow.setCountry(show.getCountry());
-        newShow.setRuntime(show.getRuntime());
-        newShow.setLanguage(show.getLanguage());
-        newShow.setGenre(show.getGenre());
+//        Show newShow = realm.createObject(Show.class, show.getId());
+//        newShow.setName(show.getName());
+//        newShow.setDescription(show.getDescription());
+//        newShow.setCountry(show.getCountry());
+//        newShow.setRuntime(show.getRuntime());
+//        newShow.setLanguage(show.getLanguage());
+//        newShow.setGenre(show.getGenre());
 
         realm.commitTransaction();
     }

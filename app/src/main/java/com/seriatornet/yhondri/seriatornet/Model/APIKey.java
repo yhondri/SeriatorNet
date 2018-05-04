@@ -6,12 +6,20 @@ package com.seriatornet.yhondri.seriatornet.Model;
 
 public class APIKey {
 
-    public static final String ID = "id";
-    public static final String NAME = "name";
-    public static final String DESCRIPTION = "name";
-    public static final String RUNTIME = "runtime";
-    public static final String COUNTRY = "country";
+    //SHOWS
+    public static final String TRAKT_ID = "traktId";
+    public static final String TITLE = "title";
+    public static final String YEAR = "year";
+    public static final String OVERVIEW = "overview";
+    public static final String NETWORK = "network";
     public static final String LANGUAGE = "language";
-    public static final String GENRE = "genre";
+    public static final String GENRES = "genres";
+    public static final String COUNTRY = "country";
+    public static final String POSTER_PATH = "poster_path";
+    public static final String BACKDROP_PATH = "backdrop_path";
+
+    //Season
+    public static final String NUMBER = "number";
+
 
 }

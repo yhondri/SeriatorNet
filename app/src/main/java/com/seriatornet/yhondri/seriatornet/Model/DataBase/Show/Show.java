@@ -15,89 +15,113 @@ public class Show extends RealmObject {
 
     @PrimaryKey
     private int id;
-    @Required
-    private String name;
-    private String country;
-    private int runtime;
-    @Required
+    private String firebaseId;
+    private String title;
+    private String overview;
+    private String network;
     private String language;
     private String genre;
-    private String poster;
-    private String banner;
-    private String description;
+    private String country;
+    private int year;
+    private int runtime;
+    private String posterPath;
+    private String backdropPath;
     private RealmList<Season> seasons;
+
+    public int getId() {
+        return id;
+    }
 
     public void setId(int id) {
         this.id = id;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getFirebaseId() {
+        return firebaseId;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setFirebaseId(String firebaseId) {
+        this.firebaseId = firebaseId;
     }
 
-    public void setRuntime(int runtime) {
-        this.runtime = runtime;
+    public String getTitle() {
+        return title;
     }
 
-    public void setCountry(String country) {
-        this.country = country;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public void setLanguage(String language) {
-        this.language = language;
+    public String getOverview() {
+        return overview;
     }
 
-    public void setGenre(String genre) {
-        this.genre = genre;
+    public void setOverview(String overview) {
+        this.overview = overview;
     }
 
-    public String getName() {
-        return name;
+    public String getNetwork() {
+        return network;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public int getRuntime() {
-        return runtime;
-    }
-
-    public int getId() {
-
-        return id;
-    }
-
-    public String getCountry() {
-        return country;
+    public void setNetwork(String network) {
+        this.network = network;
     }
 
     public String getLanguage() {
         return language;
     }
 
+    public void setLanguage(String language) {
+        this.language = language;
+    }
+
     public String getGenre() {
         return genre;
     }
 
-    public String getPoster() {
-        return poster;
+    public void setGenre(String genre) {
+        this.genre = genre;
     }
 
-    public void setPoster(String poster) {
-        this.poster = poster;
+    public String getCountry() {
+        return country;
     }
 
-    public String getBanner() {
-        return banner;
+    public void setCountry(String country) {
+        this.country = country;
     }
 
-    public void setBanner(String banner) {
-        this.banner = banner;
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+
+    public int getRuntime() {
+        return runtime;
+    }
+
+    public void setRuntime(int runtime) {
+        this.runtime = runtime;
+    }
+
+    public String getPosterPath() {
+        return posterPath;
+    }
+
+    public void setPosterPath(String posterPath) {
+        this.posterPath = posterPath;
+    }
+
+    public String getBackdropPath() {
+        return backdropPath;
+    }
+
+    public void setBackdropPath(String backdropPath) {
+        this.backdropPath = backdropPath;
     }
 
     public RealmList<Season> getSeasons() {

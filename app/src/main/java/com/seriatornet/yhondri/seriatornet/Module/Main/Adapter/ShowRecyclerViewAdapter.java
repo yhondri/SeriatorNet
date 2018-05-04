@@ -41,14 +41,14 @@ public class ShowRecyclerViewAdapter extends RecyclerView.Adapter<ShowRecyclerVi
         // - replace the contents of the view with that element
         Show show = shows.get(position);
 
-        holder.showNameTextView.setText(show.getName());
+        holder.showNameTextView.setText(show.getTitle());
         holder.channelNameTextView.setText("FOX - Temp");
         holder.runTimeTextView.setText(Integer.toString(show.getRuntime()));
         holder.genreTextView.setText(show.getGenre());
 
-        Drawable banner = Utils.getImage(show.getBanner(), context);
-        Bitmap bannerBitmap = Utils.drawableToBitmap(banner);
-        holder.backgroundImageView.setImageBitmap(bannerBitmap);
+//        Drawable banner = Utils.getImage(show.getBanner(), context);
+//        Bitmap bannerBitmap = Utils.drawableToBitmap(banner);
+//        holder.backgroundImageView.setImageBitmap(bannerBitmap);
     }
 
     // Return the size of your dataset (invoked by the layout manager)

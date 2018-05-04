@@ -56,14 +56,14 @@ public class MockDataManager {
 
         for (Show show : shows) {
             Show newShow = realm.createObject(Show.class, show.getId());
-            newShow.setName(show.getName());
+            newShow.setTitle(show.getTitle());
             newShow.setCountry(show.getCountry());
             newShow.setRuntime(show.getRuntime());
             newShow.setLanguage(show.getLanguage());
             newShow.setGenre(show.getGenre());
-            newShow.setPoster(show.getPoster());
-            newShow.setBanner(show.getBanner());
-            newShow.setDescription(show.getDescription());
+//            newShow.setPoster(show.getPoster());
+//            newShow.setBanner(show.getBanner());
+//            newShow.setDescription(show.getDescription());
         }
 
         realm.commitTransaction();

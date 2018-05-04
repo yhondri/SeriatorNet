@@ -50,7 +50,7 @@ public class ShowDetailsActivity extends AppCompatActivity {
         if (show != null) {
             ActionBar actionBar = getSupportActionBar();
             if (actionBar != null) {
-                actionBar.setTitle(show.getName());
+                actionBar.setTitle(show.getTitle());
             }
 
             setUpView();
@@ -77,9 +77,9 @@ public class ShowDetailsActivity extends AppCompatActivity {
         TextView showDescriptionTV = findViewById(R.id.showDescriptionTV);
 //        showDescriptionTV.setText(show.getDescription());
         showBackgroundImage = findViewById(R.id.showBackgroundImageView);
-        Drawable banner = Utils.getImage(show.getBanner(), this);
-        Bitmap bannerBitmap = Utils.drawableToBitmap(banner);
-        showBackgroundImage.setImageBitmap(bannerBitmap);
+//        Drawable banner = Utils.getImage(show.getBanner(), this);
+//        Bitmap bannerBitmap = Utils.drawableToBitmap(banner);
+//        showBackgroundImage.setImageBitmap(bannerBitmap);
 
         ProgressBar scoreProgressBar = findViewById(R.id.scoreProgressBar);
         scoreProgressBar.setProgress(52);

@@ -23,15 +23,18 @@ import com.microsoft.appcenter.analytics.Analytics;
 import com.microsoft.appcenter.crashes.Crashes;
 import com.seriatornet.yhondri.seriatornet.Model.APIKey;
 import com.seriatornet.yhondri.seriatornet.Model.DataBase.MockDataManager;
+import com.seriatornet.yhondri.seriatornet.Model.DataBase.Season.Season;
 import com.seriatornet.yhondri.seriatornet.Model.DataBase.Show.Show;
 import com.seriatornet.yhondri.seriatornet.R;
 import com.seriatornet.yhondri.seriatornet.Util.SharedPreferenceKey;
 import com.seriatornet.yhondri.seriatornet.Util.SharedPreferenceUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import io.realm.Realm;
+import io.realm.RealmList;
 import io.realm.RealmQuery;
 
 public class MainActivity extends AppCompatActivity {
@@ -54,7 +57,9 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                loadShows();
+//                loadShows();
+                List<Show> shows = getAllShows();
+                loadSeasonsForShow(shows.get(0));
             }
         });
 
@@ -69,13 +74,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        if (!SharedPreferenceUtils.getInstance(this).getBoolanValue(SharedPreferenceKey.DID_LOAD_DEFAULT_DATA, false)) {
-            Realm realm = Realm.getDefaultInstance();
-            MockDataManager.parseShows(realm);
-            MockDataManager.parseEpisodes(realm);
-            realm.close();
-            SharedPreferenceUtils.getInstance(this).setValue(SharedPreferenceKey.DID_LOAD_DEFAULT_DATA, true);
-        }
+//        if (!SharedPreferenceUtils.getInstance(this).getBoolanValue(SharedPreferenceKey.DID_LOAD_DEFAULT_DATA, false)) {
+//            Realm realm = Realm.getDefaultInstance();
+//            MockDataManager.parseShows(realm);
+//            MockDataManager.parseEpisodes(realm);
+//            realm.close();
+//            SharedPreferenceUtils.getInstance(this).setValue(SharedPreferenceKey.DID_LOAD_DEFAULT_DATA, true);
+//        }
+
+        getAllShows();
     }
 
     @Override
@@ -151,32 +158,102 @@ public class MainActivity extends AppCompatActivity {
         realm.beginTransaction();
 
         for (QueryDocumentSnapshot document : task.getResult()) {
-            Log.d("SERIATORNET", document.getId() + " => " + document.getData());
+//            Log.d("SERIATORNET", document.getId() + " => " + document.getData());
             Map<String, Object> showMap = document.getData();
-            Show show = realm.createObject(Show.class, showMap.get(APIKey.ID));
-            String name = (String) showMap.get(APIKey.NAME);
-            show.setName(name);
-            show.setDescription((String) showMap.get(APIKey.DESCRIPTION));
-            show.setCountry((String) showMap.get(APIKey.COUNTRY));
-            show.setRuntime(((Long) showMap.get(APIKey.RUNTIME)).intValue());
-            show.setLanguage((String) showMap.get(APIKey.LANGUAGE));
-            show.setGenre((String) showMap.get(APIKey.GENRE));
+            String title = (String) showMap.get(APIKey.TITLE);
+            String firebaseID = document.getId();
+            String overview = (String) showMap.get(APIKey.OVERVIEW);
+            String network = (String) showMap.get(APIKey.NETWORK);
+            String language = (String) showMap.get(APIKey.LANGUAGE);
+            String genres = (String) showMap.get(APIKey.GENRES);
+            String country = (String) showMap.get(APIKey.COUNTRY);
+            String posterPath = (String) showMap.get(APIKey.POSTER_PATH);
+            String backdropPath = (String) showMap.get(APIKey.BACKDROP_PATH);
+
+            Show show = realm.createObject(Show.class, showMap.get(APIKey.TRAKT_ID));
+            show.setFirebaseId(firebaseID);
+            show.setTitle(title);
+            show.setOverview(overview);
+            show.setNetwork(network);
+            show.setLanguage(language);
+            show.setGenre(genres);
+            show.setCountry(country);
+            show.setPosterPath(posterPath);
+            show.setBackdropPath(backdropPath);
         }
 
         realm.commitTransaction();
         realm.close();
-        getAllShows();
     }
 
-    public void getAllShows() {
+    public List<Show> getAllShows() {
         Realm realm = Realm.getDefaultInstance();
         RealmQuery query = realm.where(Show.class);
+
         List<Show> shows = realm.copyFromRealm(query.findAll());
 
-        for (Show show : shows) {
-            System.out.println("Show " + show.getName() + "  " + show.getRuntime() + " " + show.getLanguage());
+//        for (Show show : shows) {
+//            loadSeasonsForShow(show);
+//        }
+
+        realm.close();
+
+        return shows;
+    }
+
+
+    private void loadSeasonsForShow(final Show show) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        String path = "shows/" + show.getFirebaseId() + "/seasons";
+
+        db.collection(path).get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            saveSeasons(task, show);
+                        } else {
+                            Log.w("SERIATORNET", "Error getting documents.", task.getException());
+                        }
+                    }
+                });
+    }
+
+    private void saveSeasons(Task<QuerySnapshot> task, Show show) {
+        Realm realm = Realm.getDefaultInstance();
+        realm.beginTransaction();
+        
+        Show seasonShow = realm.where(Show.class).equalTo("id", show.getId()).findFirst();
+
+        for (QueryDocumentSnapshot document : task.getResult()) {
+            Map<String, Object> seasonMap = document.getData();
+            String firebaseId = document.getId();
+            long longNumber = (Long)seasonMap.get(APIKey.NUMBER);
+            int number = (int)longNumber;
+
+            Season season = realm.createObject(Season.class, seasonMap.get(APIKey.TRAKT_ID));
+            season.setFirebaseId(firebaseId);
+            season.setNumber(number);
+
+            season.setShow(seasonShow);
+        }
+
+        realm.commitTransaction();
+        realm.close();
+
+        getAllSeasonsForShow(show);
+    }
+
+    public void getAllSeasonsForShow(Show show) {
+        Realm realm = Realm.getDefaultInstance();
+        List<Season> seasons = realm.where(Season.class).equalTo("show.id", show.getId()).findAll();
+
+        for (Season season : seasons) {
+            Log.d("SERIATORNET", "SEASON: " + season.getFirebaseId());
         }
 
         realm.close();
     }
+
+
 }

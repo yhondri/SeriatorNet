@@ -54,18 +54,18 @@ public class UpcomingRecyclerViewAdapter extends RecyclerView.Adapter<UpcomingRe
     public void onBindViewHolder(ViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        Episode episode = episodes.get(position);
-        holder.showNameTextView.setText(episode.getSeason().getShow().getName());
+       /** Episode episode = episodes.get(position);
+        holder.showNameTextView.setText(episode.getSeason().getShow().getTitle());
         String emissionDate = formatter.format(episode.getEmissionDate());
         holder.dateTextView.setText(emissionDate);
 
-        Drawable posterDrawable = Utils.getImage(episode.getSeason().getShow().getPoster(), context);
-        Bitmap posterBitmap = Utils.drawableToBitmap(posterDrawable);
-        holder.posterImageView.setImageBitmap(posterBitmap);
-
-        Drawable banner = Utils.getImage(episode.getSeason().getShow().getBanner(), context);
-        Bitmap bannerBitmap = Utils.drawableToBitmap(banner);
-        holder.backgroundImageView.setImageBitmap(bannerBitmap);
+//        Drawable posterDrawable = Utils.getImage(episode.getSeason().getShow().getPoster(), context);
+//        Bitmap posterBitmap = Utils.drawableToBitmap(posterDrawable);
+//        holder.posterImageView.setImageBitmap(posterBitmap);
+//
+//        Drawable banner = Utils.getImage(episode.getSeason().getShow().getBanner(), context);
+//        Bitmap bannerBitmap = Utils.drawableToBitmap(banner);
+//        holder.backgroundImageView.setImageBitmap(bannerBitmap);
 
         String episodeName = "S";
 
@@ -81,7 +81,7 @@ public class UpcomingRecyclerViewAdapter extends RecyclerView.Adapter<UpcomingRe
             episodeName += "E" + Integer.toString(episode.getNumber());
         }
 
-        holder.episodeNameTextView.setText(episodeName);
+        holder.episodeNameTextView.setText(episodeName);*/
     }
 
     // Return the size of your dataset (invoked by the layout manager)
