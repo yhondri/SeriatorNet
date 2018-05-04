@@ -26,7 +26,6 @@ public class ShowRecyclerViewAdapter extends RecyclerView.Adapter<ShowRecyclerVi
     private List<Show> shows;
     private Context context;
     private DisplayImageOptions mOptionsThumb;
-    private ImageLoader imageLoader;
 
     public ShowRecyclerViewAdapter(List<Show> shows, Context context) {
         this.shows = shows;

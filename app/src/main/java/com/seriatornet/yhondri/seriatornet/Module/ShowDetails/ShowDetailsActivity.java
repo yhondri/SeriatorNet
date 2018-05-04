@@ -14,6 +14,9 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.seriatornet.yhondri.seriatornet.Model.AppKey;
 import com.seriatornet.yhondri.seriatornet.Model.DataBase.Show.Show;
 import com.seriatornet.yhondri.seriatornet.R;
@@ -30,6 +33,7 @@ public class ShowDetailsActivity extends AppCompatActivity {
     private ImageButton likeImageButton;
     private ImageButton dislikeImageButton;
     private ImageView showBackgroundImage;
+    private DisplayImageOptions mOptionsThumb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +42,10 @@ public class ShowDetailsActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this)
+                .build();
+        ImageLoader.getInstance().init(config);
 
         realm = Realm.getDefaultInstance();
 
@@ -60,8 +68,6 @@ public class ShowDetailsActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
                 presenter.goToEpisodesList();
             }
         });
@@ -69,20 +75,26 @@ public class ShowDetailsActivity extends AppCompatActivity {
 
     private void setUpView() {
         TextView channelNameTextView = findViewById(R.id.channelNameTextView);
-        channelNameTextView.setText("FOX");
+        channelNameTextView.setText(show.getNetwork());
         TextView runTimeTextView = findViewById(R.id.runTimeTextView);
         runTimeTextView.setText(Integer.toString(show.getRuntime()));
         TextView genreTextView = findViewById(R.id.genreTextView);
         genreTextView.setText(show.getGenre());
         TextView showDescriptionTV = findViewById(R.id.showDescriptionTV);
-//        showDescriptionTV.setText(show.getDescription());
+        showDescriptionTV.setText(show.getOverview());
         showBackgroundImage = findViewById(R.id.showBackgroundImageView);
-//        Drawable banner = Utils.getImage(show.getBanner(), this);
-//        Bitmap bannerBitmap = Utils.drawableToBitmap(banner);
-//        showBackgroundImage.setImageBitmap(bannerBitmap);
 
+        if (!show.getBackdropPath().isEmpty()) {
+            ImageLoader.getInstance().displayImage(show.getBackdropPath(), showBackgroundImage, mOptionsThumb);
+        } else {
+            showBackgroundImage.setImageResource(R.drawable.ic_television);
+        }
+
+        int ratingValue = show.getRating().intValue()*10;
         ProgressBar scoreProgressBar = findViewById(R.id.scoreProgressBar);
-        scoreProgressBar.setProgress(52);
+        scoreProgressBar.setProgress(ratingValue);
+        TextView textView = findViewById(R.id.ratingTextView);
+        textView.setText(ratingValue +"%");
 
         likeImageButton = findViewById(R.id.likeImageButton);
         dislikeImageButton = findViewById(R.id.dislikeImageButton);

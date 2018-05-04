@@ -169,6 +169,8 @@ public class MainActivity extends AppCompatActivity {
             String country = (String) showMap.get(APIKey.COUNTRY);
             String posterPath = (String) showMap.get(APIKey.POSTER_PATH);
             String backdropPath = (String) showMap.get(APIKey.BACKDROP_PATH);
+            Double raiting = (Double) showMap.get(APIKey.RATING);
+            Double runtime = (Double) showMap.get(APIKey.RUNTIME);
 
             Show show = realm.createObject(Show.class, showMap.get(APIKey.TRAKT_ID));
             show.setFirebaseId(firebaseID);
@@ -180,7 +182,11 @@ public class MainActivity extends AppCompatActivity {
             show.setCountry(country);
             show.setPosterPath(posterPath);
             show.setBackdropPath(backdropPath);
+            show.setRating(raiting);
+            show.setRuntime(runtime.intValue());
         }
+
+        getAllShows();
 
         realm.commitTransaction();
         realm.close();

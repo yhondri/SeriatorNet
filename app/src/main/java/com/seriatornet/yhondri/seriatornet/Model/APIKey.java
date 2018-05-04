@@ -17,6 +17,8 @@ public class APIKey {
     public static final String COUNTRY = "country";
     public static final String POSTER_PATH = "poster_path";
     public static final String BACKDROP_PATH = "backdrop_path";
+    public static final String RATING = "rating";
+    public static final String RUNTIME = "runtime";
 
     //Season
     public static final String NUMBER = "number";

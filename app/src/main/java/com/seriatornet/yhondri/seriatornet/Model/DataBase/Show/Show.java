@@ -23,9 +23,10 @@ public class Show extends RealmObject {
     private String genre;
     private String country;
     private int year;
-    private int runtime;
     private String posterPath;
     private String backdropPath;
+    private Double rating;
+    private int runtime;
     private RealmList<Season> seasons;
 
     public int getId() {
@@ -122,6 +123,14 @@ public class Show extends RealmObject {
 
     public void setBackdropPath(String backdropPath) {
         this.backdropPath = backdropPath;
+    }
+
+    public Double getRating() {
+        return rating;
+    }
+
+    public void setRating(Double rating) {
+        this.rating = rating;
     }
 
     public RealmList<Season> getSeasons() {
