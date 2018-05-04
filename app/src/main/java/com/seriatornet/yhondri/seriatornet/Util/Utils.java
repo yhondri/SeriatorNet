@@ -7,6 +7,10 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
+import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
+
 import java.util.regex.Pattern;
 
 /**
@@ -27,6 +31,7 @@ public class Utils {
 
     /**
      * Returns true if the string is null or 0-length.
+     *
      * @param str the string to be examined
      * @return true if str is null or zero length
      */
@@ -36,6 +41,7 @@ public class Utils {
 
     /**
      * Convierte un drawable a bitmap adaptándolo a la densidad de píxeles del dispositivo.
+     *
      * @param drawable Drawable a convertir.
      * @return bitmap recibido.
      */
@@ -59,10 +65,26 @@ public class Utils {
 
     /**
      * Obtiene una imagen a partir de su nombre.
+     *
      * @param name nombre de la imagen.
      * @return Drawabe obtenido.
      */
     public static Drawable getImage(String name, Context context) {
         return context.getResources().getDrawable(context.getResources().getIdentifier(name, "drawable", context.getPackageName()));
+    }
+
+    public static DisplayImageOptions getDisplayImageOptionsBuildWithDisplayer(int id, int delay, FadeInBitmapDisplayer displayer) {
+        return new DisplayImageOptions.Builder()
+                .cacheInMemory(true)
+                .cacheOnDisk(true)
+                .delayBeforeLoading(delay)
+                .showImageOnLoading(id)
+                .showImageOnFail(id)
+                .imageScaleType(ImageScaleType.IN_SAMPLE_INT)
+                .bitmapConfig(Bitmap.Config.RGB_565)
+                .resetViewBeforeLoading(true)
+                .displayer(displayer)
+                .considerExifParams(true)
+                .build();
     }
 }

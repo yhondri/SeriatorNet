@@ -16,6 +16,7 @@ public class Season extends RealmObject {
     @PrimaryKey
     private int id;
     private String firebaseId;
+    private int traktId;
     private int number;
     private Show show;
     private RealmList<Episode> episodes;
@@ -50,6 +51,14 @@ public class Season extends RealmObject {
 
     public void setShow(Show show) {
         this.show = show;
+    }
+
+    public int getTraktId() {
+        return traktId;
+    }
+
+    public void setTraktId(int traktId) {
+        this.traktId = traktId;
     }
 
     public RealmList<Episode> getEpisodes() {

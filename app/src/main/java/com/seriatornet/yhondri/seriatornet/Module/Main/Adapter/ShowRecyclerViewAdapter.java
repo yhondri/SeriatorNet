@@ -11,6 +11,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.seriatornet.yhondri.seriatornet.Model.DataBase.Show.Show;
 import com.seriatornet.yhondri.seriatornet.R;
 import com.seriatornet.yhondri.seriatornet.Util.Utils;
@@ -21,10 +25,20 @@ public class ShowRecyclerViewAdapter extends RecyclerView.Adapter<ShowRecyclerVi
 
     private List<Show> shows;
     private Context context;
+    private DisplayImageOptions mOptionsThumb;
+    private ImageLoader imageLoader;
 
     public ShowRecyclerViewAdapter(List<Show> shows, Context context) {
         this.shows = shows;
         this.context = context;
+
+        mOptionsThumb = Utils.getDisplayImageOptionsBuildWithDisplayer(R.drawable.ic_television,
+                300,
+                new FadeInBitmapDisplayer(300));
+
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context)
+			.build();
+        ImageLoader.getInstance().init(config);
     }
 
     // Create new views (invoked by the layout manager)
@@ -42,9 +56,16 @@ public class ShowRecyclerViewAdapter extends RecyclerView.Adapter<ShowRecyclerVi
         Show show = shows.get(position);
 
         holder.showNameTextView.setText(show.getTitle());
-        holder.channelNameTextView.setText("FOX - Temp");
+        holder.channelNameTextView.setText(show.getNetwork());
         holder.runTimeTextView.setText(Integer.toString(show.getRuntime()));
         holder.genreTextView.setText(show.getGenre());
+
+        if (!show.getBackdropPath().isEmpty()) {
+            String t = show.getBackdropPath();
+            ImageLoader.getInstance().displayImage(show.getBackdropPath(), holder.backgroundImageView, mOptionsThumb);
+        } else {
+            holder.backgroundImageView.setImageResource(R.drawable.ic_television);
+        }
 
 //        Drawable banner = Utils.getImage(show.getBanner(), context);
 //        Bitmap bannerBitmap = Utils.drawableToBitmap(banner);

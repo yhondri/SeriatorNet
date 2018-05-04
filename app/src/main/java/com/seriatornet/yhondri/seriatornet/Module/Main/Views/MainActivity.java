@@ -22,6 +22,7 @@ import com.microsoft.appcenter.AppCenter;
 import com.microsoft.appcenter.analytics.Analytics;
 import com.microsoft.appcenter.crashes.Crashes;
 import com.seriatornet.yhondri.seriatornet.Model.APIKey;
+import com.seriatornet.yhondri.seriatornet.Model.DataBase.Episode.Episode;
 import com.seriatornet.yhondri.seriatornet.Model.DataBase.MockDataManager;
 import com.seriatornet.yhondri.seriatornet.Model.DataBase.Season.Season;
 import com.seriatornet.yhondri.seriatornet.Model.DataBase.Show.Show;
@@ -57,9 +58,9 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                loadShows();
-                List<Show> shows = getAllShows();
-                loadSeasonsForShow(shows.get(0));
+                loadShows();
+//                List<Show> shows = getAllShows();
+//                loadSeasonsForShow(shows.get(0));
             }
         });
 
@@ -82,7 +83,6 @@ public class MainActivity extends AppCompatActivity {
 //            SharedPreferenceUtils.getInstance(this).setValue(SharedPreferenceKey.DID_LOAD_DEFAULT_DATA, true);
 //        }
 
-        getAllShows();
     }
 
     @Override
@@ -186,19 +186,17 @@ public class MainActivity extends AppCompatActivity {
         realm.close();
     }
 
-    public List<Show> getAllShows() {
+    public void getAllShows() {
         Realm realm = Realm.getDefaultInstance();
         RealmQuery query = realm.where(Show.class);
-
         List<Show> shows = realm.copyFromRealm(query.findAll());
-
-//        for (Show show : shows) {
-//            loadSeasonsForShow(show);
-//        }
-
         realm.close();
 
-        return shows;
+        for (Show show : shows) {
+            loadSeasonsForShow(show);
+        }
+
+//        return shows;
     }
 
 
@@ -222,18 +220,21 @@ public class MainActivity extends AppCompatActivity {
     private void saveSeasons(Task<QuerySnapshot> task, Show show) {
         Realm realm = Realm.getDefaultInstance();
         realm.beginTransaction();
-        
+
         Show seasonShow = realm.where(Show.class).equalTo("id", show.getId()).findFirst();
 
         for (QueryDocumentSnapshot document : task.getResult()) {
             Map<String, Object> seasonMap = document.getData();
             String firebaseId = document.getId();
-            long longNumber = (Long)seasonMap.get(APIKey.NUMBER);
-            int number = (int)longNumber;
+            long longNumber = (Long) seasonMap.get(APIKey.NUMBER);
+            int number = (int) longNumber;
+            longNumber = (Long) seasonMap.get(APIKey.TRAKT_ID);
+            int traktId = (int) longNumber;
 
             Season season = realm.createObject(Season.class, seasonMap.get(APIKey.TRAKT_ID));
             season.setFirebaseId(firebaseId);
             season.setNumber(number);
+            season.setTraktId(traktId);
 
             season.setShow(seasonShow);
         }
@@ -247,13 +248,56 @@ public class MainActivity extends AppCompatActivity {
     public void getAllSeasonsForShow(Show show) {
         Realm realm = Realm.getDefaultInstance();
         List<Season> seasons = realm.where(Season.class).equalTo("show.id", show.getId()).findAll();
+        realm.close();
 
         for (Season season : seasons) {
-            Log.d("SERIATORNET", "SEASON: " + season.getFirebaseId());
+            loadEpisodesForSeason(season, show);
         }
 
-        realm.close();
     }
 
+    private void loadEpisodesForSeason(final Season season, Show show) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        String path = "shows/" + show.getFirebaseId() + "/seasons/" + season.getFirebaseId() + "/episodes";
 
+        db.collection(path).get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            saveEpisodesForSeason(task, season);
+                        } else {
+                            Log.w("SERIATORNET", "Error getting documents.", task.getException());
+                        }
+                    }
+                });
+    }
+
+    private void saveEpisodesForSeason(Task<QuerySnapshot> task, Season season) {
+        Realm realm = Realm.getDefaultInstance();
+        realm.beginTransaction();
+
+        Season seasonEpisodes = realm.where(Season.class).equalTo("traktId", season.getTraktId()).findFirst();
+
+        for (QueryDocumentSnapshot document : task.getResult()) {
+            Map<String, Object> seasonMap = document.getData();
+
+            String firebaseId = document.getId();
+            long longNumber = (Long) seasonMap.get(APIKey.NUMBER);
+            int number = (int) longNumber;
+            String overView = (String) seasonMap.get(APIKey.OVERVIEW);
+            String title = (String) seasonMap.get(APIKey.TITLE);
+
+            Episode episode = realm.createObject(Episode.class, seasonMap.get(APIKey.TRAKT_ID));
+            episode.setFirebaseId(Integer.parseInt(firebaseId));
+            episode.setNumber(number);
+            episode.setOverview(overView);
+            episode.setTitle(title);
+
+            episode.setSeason(seasonEpisodes);
+        }
+
+        realm.commitTransaction();
+        realm.close();
+    }
 }

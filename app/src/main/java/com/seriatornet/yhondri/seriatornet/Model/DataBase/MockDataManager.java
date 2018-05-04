@@ -98,7 +98,7 @@ public class MockDataManager {
             Episode newEpisode = realm.createObject(Episode.class, episode.getId());
             newEpisode.setTitle(episode.getTitle());
             newEpisode.setNumber(episode.getNumber());
-            newEpisode.setEmissionDate(episode.getEmissionDate());
+//            newEpisode.setEmissionDate(episode.getEmissionDate());
             newEpisode.setOverview(episode.getOverview());
 
             int seasonNumber = episode.getId() / 10;

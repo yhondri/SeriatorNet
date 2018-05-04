@@ -15,19 +15,12 @@ public class Episode extends RealmObject {
 
     @PrimaryKey
     private int id;
+    private int firebaseId;
     private String title;
     private int number;
-    private Date emissionDate;
+    private double rating;
     private String overview;
     private Season season;
-
-    public Season getSeason() {
-        return season;
-    }
-
-    public void setSeason(Season season) {
-        this.season = season;
-    }
 
     public int getId() {
         return id;
@@ -35,6 +28,14 @@ public class Episode extends RealmObject {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getFirebaseId() {
+        return firebaseId;
+    }
+
+    public void setFirebaseId(int firebaseId) {
+        this.firebaseId = firebaseId;
     }
 
     public String getTitle() {
@@ -53,12 +54,12 @@ public class Episode extends RealmObject {
         this.number = number;
     }
 
-    public Date getEmissionDate() {
-        return emissionDate;
+    public double getRating() {
+        return rating;
     }
 
-    public void setEmissionDate(Date emissionDate) {
-        this.emissionDate = emissionDate;
+    public void setRating(double rating) {
+        this.rating = rating;
     }
 
     public String getOverview() {
@@ -67,5 +68,13 @@ public class Episode extends RealmObject {
 
     public void setOverview(String overview) {
         this.overview = overview;
+    }
+
+    public Season getSeason() {
+        return season;
+    }
+
+    public void setSeason(Season season) {
+        this.season = season;
     }
 }
