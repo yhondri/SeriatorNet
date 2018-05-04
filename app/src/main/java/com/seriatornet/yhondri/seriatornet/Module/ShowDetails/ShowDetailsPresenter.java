@@ -18,7 +18,7 @@ public class ShowDetailsPresenter implements ShowDetailsPresentation {
     }
 
     @Override
-    public void goToEpisodesList() {
-        router.goToEpisodesList();
+    public void goToEpisodesList(int showId) {
+        router.goToEpisodesList(showId);
     }
 }

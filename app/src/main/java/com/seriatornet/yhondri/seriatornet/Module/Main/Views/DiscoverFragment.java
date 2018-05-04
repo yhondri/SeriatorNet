@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
+import com.seriatornet.yhondri.seriatornet.Model.APIKey;
 import com.seriatornet.yhondri.seriatornet.Model.AppKey;
 import com.seriatornet.yhondri.seriatornet.Model.DataBase.Show.Show;
 import com.seriatornet.yhondri.seriatornet.Module.Main.Adapter.ClickListener;
@@ -130,7 +131,7 @@ public class DiscoverFragment extends Fragment implements ClickListener, SearchV
 
             List<Show> shows = realm.where(Show.class)
                     .contains("genre", category, Case.INSENSITIVE)
-                    .sort("name")
+                    .sort(APIKey.TITLE)
                     .findAll();
 
             if (shows.size() > 0) {
@@ -166,8 +167,8 @@ public class DiscoverFragment extends Fragment implements ClickListener, SearchV
             recyclerView.setAdapter(discoverCategoriesAdapter);
         } else {
             List<Show> shows = realm.where(Show.class)
-                    .contains("name", newText, Case.INSENSITIVE)
-                    .sort("name")
+                    .contains(APIKey.TITLE, newText, Case.INSENSITIVE)
+                    .sort(APIKey.TITLE)
                     .findAll();
 
             showRecyclerViewAdapter.refreshData(shows);

@@ -7,11 +7,20 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
+import com.seriatornet.yhondri.seriatornet.Model.AppKey;
+import com.seriatornet.yhondri.seriatornet.Model.DataBase.Episode.Episode;
+import com.seriatornet.yhondri.seriatornet.Model.DataBase.Season.Season;
+import com.seriatornet.yhondri.seriatornet.Model.DataBase.Show.Show;
 import com.seriatornet.yhondri.seriatornet.R;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import io.realm.Realm;
+
 public class EpisodesActivity extends AppCompatActivity {
+
+    private Show show;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,29 +29,39 @@ public class EpisodesActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        Realm realm = Realm.getDefaultInstance();
+
+        int showId = getIntent().getIntExtra(AppKey.SHOW_ID, 0);
+        show = realm.where(Show.class).equalTo("id", showId).findFirst();
+
         RecyclerView mRecyclerView = findViewById(R.id.episodes_recycler_view);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(this,LinearLayoutManager.VERTICAL));
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
 
-        String[] sCheeseStrings = {"Episodio 1", "Episodio 1", "Episodio 1", "Episodio 2", "Episodio 2"};
-        //Your RecyclerView.Adapter
-        SimpleAdapter mAdapter = new SimpleAdapter(this, sCheeseStrings);
+        List<Season> seasons = realm.where(Season.class).equalTo("show.id", showId).findAll();
+        List<Episode> episodes = new ArrayList<>();
 
-        //This is the code to provide a sectioned list
         List<SimpleSectionedRecyclerViewAdapter.Section> sections = new ArrayList<>();
 
-        //Sections
-        sections.add(new SimpleSectionedRecyclerViewAdapter.Section(0,"Section 1"));
-        sections.add(new SimpleSectionedRecyclerViewAdapter.Section(3,"Section 2"));
-//        sections.add(new SimpleSectionedRecyclerViewAdapter.Section(12,"Section 3"));
-//        sections.add(new SimpleSectionedRecyclerViewAdapter.Section(14,"Section 4"));
-//        sections.add(new SimpleSectionedRecyclerViewAdapter.Section(20,"Section 5"));
+        int counter = 0;
+        for (Season season : seasons) {
+            List<Episode> seasonsEpisodes = realm.where(Episode.class).equalTo("season.traktId", season.getTraktId()).findAll();
+            episodes.addAll(seasonsEpisodes);
+
+            sections.add(new SimpleSectionedRecyclerViewAdapter.Section(counter, "Temporada " + season.getNumber()));
+
+            counter += seasonsEpisodes.size() + 1;
+        }
+
+        //Your RecyclerView.Adapter
+        SimpleAdapter mAdapter = new SimpleAdapter(this, episodes);
 
         //Add your adapter to the sectionAdapter
         SimpleSectionedRecyclerViewAdapter.Section[] dummy = new SimpleSectionedRecyclerViewAdapter.Section[sections.size()];
         SimpleSectionedRecyclerViewAdapter mSectionedAdapter = new
-                SimpleSectionedRecyclerViewAdapter(this,R.layout.content_section, R.id.section_text_view, mAdapter);
+                SimpleSectionedRecyclerViewAdapter(this,
+                R.layout.content_section, R.id.section_text_view, mAdapter);
         mSectionedAdapter.setSections(sections.toArray(dummy));
 
         //Apply this adapter to the RecyclerView

@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.seriatornet.yhondri.seriatornet.Model.DataBase.Episode.Episode;
 import com.seriatornet.yhondri.seriatornet.R;
 
 import java.util.ArrayList;
@@ -17,11 +18,24 @@ import java.util.List;
 public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.SimpleViewHolder> {
 
     private final Context mContext;
-    private List<String> mData;
+    private List<Episode> mData;
 
-    public void add(String s, int position) {
+    public List<Episode> getmData() {
+        return mData;
+    }
+
+    public SimpleAdapter(Context context, List<Episode> data) {
+        mContext = context;
+        if (data == null) {
+            mData = new ArrayList<>();
+        } else {
+            this.mData = data;
+        }
+    }
+
+    public void add(Episode episode, int position) {
         position = position == -1 ? getItemCount()  : position;
-        mData.add(position,s);
+        mData.add(position, episode);
         notifyItemInserted(position);
     }
 
@@ -41,15 +55,6 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.SimpleView
         }
     }
 
-    public SimpleAdapter(Context context, String[] data) {
-        mContext = context;
-        if (data != null) {
-            mData = new ArrayList<>(Arrays.asList(data));
-        } else {
-            mData = new ArrayList<>();
-        }
-    }
-
     public SimpleViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         final View view = LayoutInflater.from(mContext).inflate(R.layout.row_episode, parent, false);
         return new SimpleViewHolder(view);
@@ -57,7 +62,7 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.SimpleView
 
     @Override
     public void onBindViewHolder(SimpleViewHolder holder, final int position) {
-        holder.title.setText(mData.get(position));
+        holder.title.setText(mData.get(position).getTitle());
         holder.title.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

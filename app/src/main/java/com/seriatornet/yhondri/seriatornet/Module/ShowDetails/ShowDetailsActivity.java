@@ -68,7 +68,7 @@ public class ShowDetailsActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                presenter.goToEpisodesList();
+                presenter.goToEpisodesList(show.getId());
             }
         });
     }
