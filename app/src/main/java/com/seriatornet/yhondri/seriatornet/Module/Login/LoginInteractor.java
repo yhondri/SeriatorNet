@@ -158,11 +158,16 @@ public class LoginInteractor implements LoginInteractorInput, OauthServiceResult
         RealmQuery query = realm.where(Show.class);
         List<Show> shows = realm.copyFromRealm(query.findAll());
 
-        lastShow = shows.get(shows.size() - 1);
+        if (shows.size()  > 0) {
+            lastShow = shows.get(shows.size() - 1);
 
-        for (Show show : shows) {
-            loadSeasonsForShow(show);
+            for (Show show : shows) {
+                loadSeasonsForShow(show);
+            }
+        } else {
+            output.onLoginDidFail(R.string.no_data);
         }
+
 
 //        return shows;
     }

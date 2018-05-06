@@ -100,7 +100,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        onBackPressedListener.onBackPressed();
+        if (onBackPressedListener != null){
+            onBackPressedListener.onBackPressed();
+        }
     }
 
     private void selectFragment(int itemId) {

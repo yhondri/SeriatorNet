@@ -34,6 +34,7 @@ public class LoginPresenter implements LoginPresentation, LoginInteractorOutput 
 
     @Override
     public void onLoginDidFail(int errorMessage) {
+        view.loginDidEnd();
         view.showInvalidPasswordError(errorMessage);
     }
 

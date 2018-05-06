@@ -23,6 +23,7 @@
     <!-- Login -->
     <string name="login">Log In</string>
     <string name="welcome_back">¡Hola de nuevo %1$s!</string>
+    <string name="no_data">Problemas técnicos, no hay datos</string>
 
     <!-- Register Login -->
     <string name="prompt_email">Email</string>

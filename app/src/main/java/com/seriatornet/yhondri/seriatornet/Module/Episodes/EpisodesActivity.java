@@ -61,7 +61,7 @@ public class EpisodesActivity extends AppCompatActivity implements ClickListener
 
             sections.add(new SimpleSectionedRecyclerViewAdapter.Section(counter, "Temporada " + season.getNumber()));
 
-            counter += seasonsEpisodes.size() + 1;
+            counter += seasonsEpisodes.size();
         }
 
         //Your RecyclerView.Adapter
