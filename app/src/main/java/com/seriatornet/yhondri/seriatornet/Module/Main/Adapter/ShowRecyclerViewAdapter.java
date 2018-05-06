@@ -65,10 +65,6 @@ public class ShowRecyclerViewAdapter extends RecyclerView.Adapter<ShowRecyclerVi
         } else {
             holder.backgroundImageView.setImageResource(R.drawable.ic_television);
         }
-
-//        Drawable banner = Utils.getImage(show.getBanner(), context);
-//        Bitmap bannerBitmap = Utils.drawableToBitmap(banner);
-//        holder.backgroundImageView.setImageBitmap(bannerBitmap);
     }
 
     // Return the size of your dataset (invoked by the layout manager)

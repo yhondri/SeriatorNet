@@ -23,5 +23,16 @@ public class APIKey {
     //Season
     public static final String NUMBER = "number";
 
+    //Following shows
+    public static final String FOLLOWING = "following";
+    public static final String FOLLOWING_USERS_SHOW_COLLECTION = "followingUsersShowCollection";
+
+    //Like shows
+    public static final String FAVORITE_USERS_SHOW_COLLECTION = "favoriteUsersShowCollection";
+    public static final String LIKE = "like";
+
+    //Dislike shows
+    public static final String NO_FAVORITE_USERS_SHOW_COLLECTION = "nofavoriteUsersShowCollection";
+    public static final String DISLIKE = "dislike";
 
 }
