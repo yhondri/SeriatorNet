@@ -151,7 +151,6 @@ public class ShowDetailsActivity extends AppCompatActivity {
 
         realm.commitTransaction();
 
-
         postLikeShows();
         postDislikeShows();
 
