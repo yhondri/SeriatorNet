@@ -6,6 +6,7 @@
     <color name="white">#FFFFFF</color>
     <color name="light_gray">#38FFFFFF</color>
     <color name="text_light_gray">#A6FFFFFF</color>
+    <color name="following_show">#01579B</color>
 
     <!-- alpha 75%-->
     <color name="cardview_semitransparent_dark_background">#BF000000</color>

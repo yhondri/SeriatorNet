@@ -1,14 +1,17 @@
 package com.seriatornet.yhondri.seriatornet.Module.ShowDetails;
 
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -33,6 +36,7 @@ public class ShowDetailsActivity extends AppCompatActivity {
     private ImageButton likeImageButton;
     private ImageButton dislikeImageButton;
     private ImageView showBackgroundImage;
+    private Button followingButton;
     private DisplayImageOptions mOptionsThumb;
 
     @Override
@@ -98,18 +102,75 @@ public class ShowDetailsActivity extends AppCompatActivity {
 
         likeImageButton = findViewById(R.id.likeImageButton);
         dislikeImageButton = findViewById(R.id.dislikeImageButton);
+        followingButton = findViewById(R.id.followingButton);
+
         likeImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                likeImageButton.setImageResource(R.drawable.ic_like_filled);
-            }
+                scoreShow(true); }
         });
 
         dislikeImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dislikeImageButton.setImageResource(R.drawable.ic_dislike_filled);
+               scoreShow(false);
             }
         });
+
+        followingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                followShow(!show.isFollowing());
+            }
+        });
+
+        setUpLikeButtons();
+        followShow(show.isFollowing());
+    }
+
+    private void scoreShow(boolean like) {
+        if (show.isLike() && like) {
+            return;
+        }
+
+        if (show.isDislike() && !like) {
+            return;
+        }
+
+        realm.beginTransaction();
+
+        show.setLike(like);
+        show.setDislike(!like);
+
+        realm.commitTransaction();
+
+        setUpLikeButtons();
+    }
+
+    private void setUpLikeButtons() {
+        likeImageButton.setImageResource(show.isLike() ? R.drawable.ic_like_filled : R.drawable.ic_like_empty);
+        dislikeImageButton.setImageResource(show.isDislike() ? R.drawable.ic_dislike_filled : R.drawable.ic_dislike_empty);
+    }
+
+    private void followShow(boolean isFollowing) {
+        int backgroundColor;
+        int textColor;
+
+        if (isFollowing) {
+            backgroundColor = getResources().getColor(R.color.following_show);
+            textColor = getResources().getColor(R.color.white);
+        } else {
+            backgroundColor = getResources().getColor(R.color.white);
+            textColor = getResources().getColor(R.color.following_show);
+        }
+
+        realm.beginTransaction();
+
+        show.setFollowing(isFollowing);
+
+        realm.commitTransaction();
+
+        followingButton.setBackgroundColor(backgroundColor);
+        followingButton.setTextColor(textColor);
     }
 }

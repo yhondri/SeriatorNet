@@ -76,6 +76,7 @@
             </LinearLayout>
 
             <Button
+                android:id="@+id/followingButton"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:layout_marginLeft="10dp"
@@ -126,16 +127,14 @@
                         android:layout_height="30dp"
                         android:layout_marginRight="10dp"
                         android:background="@null"
-                        android:src="@drawable/ic_like_empty"
-                        android:tint="@android:color/white" />
+                        android:src="@drawable/ic_like_empty" />
 
                     <ImageButton
                         android:id="@+id/dislikeImageButton"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:background="@null"
-                        android:src="@drawable/ic_dislike_empty"
-                        android:tint="@android:color/white" />
+                        android:src="@drawable/ic_dislike_empty" />
 
                 </LinearLayout>
 

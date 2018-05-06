@@ -27,6 +27,9 @@ public class Show extends RealmObject {
     private String backdropPath;
     private Double rating;
     private int runtime;
+    private boolean following;
+    private boolean like;
+    private boolean dislike;
     private RealmList<Season> seasons;
 
     public int getId() {
@@ -131,6 +134,30 @@ public class Show extends RealmObject {
 
     public void setRating(Double rating) {
         this.rating = rating;
+    }
+
+    public boolean isFollowing() {
+        return following;
+    }
+
+    public void setFollowing(boolean following) {
+        this.following = following;
+    }
+
+    public boolean isLike() {
+        return like;
+    }
+
+    public void setLike(boolean like) {
+        this.like = like;
+    }
+
+    public boolean isDislike() {
+        return dislike;
+    }
+
+    public void setDislike(boolean dislike) {
+        this.dislike = dislike;
     }
 
     public RealmList<Season> getSeasons() {
