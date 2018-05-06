@@ -21,6 +21,7 @@ public class Episode extends RealmObject {
     private double rating;
     private String overview;
     private Date emissionDate;
+    private boolean watched;
     private Season season;
 
     public int getId() {
@@ -77,6 +78,14 @@ public class Episode extends RealmObject {
 
     public void setEmissionDate(Date emissionDate) {
         this.emissionDate = emissionDate;
+    }
+
+    public boolean isWatched() {
+        return watched;
+    }
+
+    public void setWatched(boolean watched) {
+        this.watched = watched;
     }
 
     public Season getSeason() {

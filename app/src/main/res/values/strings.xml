@@ -47,6 +47,7 @@
     <string name="dislike">No te gustan</string>
     <string name="seen">Capítulos vistos</string>
     <string name="following">Siguiendo</string>
+    <string name="watched">Capítulos vistos</string>
 
     <!-- Discover fragment -->
 

@@ -10,10 +10,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.seriatornet.yhondri.seriatornet.Model.DataBase.Episode.Episode;
 import com.seriatornet.yhondri.seriatornet.Model.DataBase.Show.Show;
 import com.seriatornet.yhondri.seriatornet.Module.Login.LoginActivity;
 import com.seriatornet.yhondri.seriatornet.R;
 import com.seriatornet.yhondri.seriatornet.Util.FirebaseOauthService;
+import com.seriatornet.yhondri.seriatornet.Util.SharedPreferenceKey;
+import com.seriatornet.yhondri.seriatornet.Util.SharedPreferenceUtils;
 
 import java.util.List;
 
@@ -78,6 +81,8 @@ public class ProfileFragment extends Fragment {
     }
 
     private void setUp() {
+        TextView userEmailTextView = rootView.findViewById(R.id.userEmailTextView);
+        userEmailTextView.setText(SharedPreferenceUtils.getInstance(getActivity()).getStringValue(SharedPreferenceKey.USER_NAME, ""));
 
         List<Show> followingShows = realm.where(Show.class)
                 .equalTo("following", true)
@@ -92,12 +97,17 @@ public class ProfileFragment extends Fragment {
         TextView likesCounterTextView = rootView.findViewById(R.id.likesCounterTextView);
         likesCounterTextView.setText(Integer.toString(likeShows.size()));
 
-
         List<Show> dislikeShows = realm.where(Show.class)
                 .equalTo("dislike", true)
                 .findAll();
         TextView dislikeShowsTextView = rootView.findViewById(R.id.dislikeShowsTextView);
         dislikeShowsTextView.setText(Integer.toString(dislikeShows.size()));
+
+        List<Episode> watchedEpisodes = realm.where(Episode.class)
+                .equalTo("watched", true)
+                .findAll();
+        TextView watchedEpisodesTextView = rootView.findViewById(R.id.watchedEpisodesTextView);
+        watchedEpisodesTextView.setText(Integer.toString(watchedEpisodes.size()));
     }
 
     private void logOut() {

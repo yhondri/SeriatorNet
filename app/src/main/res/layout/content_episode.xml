@@ -74,6 +74,15 @@
 
             </LinearLayout>
 
+            <ImageButton
+                android:id="@+id/watchImageButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_white_eye"
+                android:background="@null"
+                android:layout_marginLeft="15dp"
+                />
+
             <TextView
                 android:id="@+id/showDescriptionTV"
                 android:layout_width="match_parent"

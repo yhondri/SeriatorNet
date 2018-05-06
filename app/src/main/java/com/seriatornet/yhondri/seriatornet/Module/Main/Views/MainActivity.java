@@ -81,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
 
         loadLikeShows();
         loadDislikeShows();
+        loadWatchedEpisodes();
 
 //        if (!SharedPreferenceUtils.getInstance(this).getBoolanValue(SharedPreferenceKey.DID_LOAD_DEFAULT_DATA, false)) {
 //            Realm realm = Realm.getDefaultInstance();
@@ -180,7 +181,21 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private void loadWatchedEpisodes() {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        String path = APIKey.WATCHED_USERS_SHOW_COLLECTION + "/" + SharedPreferenceUtils.getInstance(this).getStringValue(SharedPreferenceKey.USER_NAME, "");
 
+        db.document(path).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    updateWatchedEpisodes(task);
+                } else {
+                    Log.w("SERIATORNET", "Error getting documents.", task.getException());
+                }
+            }
+        });
+    }
 
     private void updateLikeShows(Task<DocumentSnapshot> task) {
         Map<String, Object> seasonMap = task.getResult().getData();
@@ -215,6 +230,25 @@ public class MainActivity extends AppCompatActivity {
                 if (show != null) {
                     show.setDislike(true);
                     show.setLike(false);
+                }
+            }
+
+            realm.commitTransaction();
+        }
+    }
+
+    private void updateWatchedEpisodes(Task<DocumentSnapshot> task) {
+        Map<String, Object> seasonMap = task.getResult().getData();
+
+        if (seasonMap != null) {
+            realm.beginTransaction();
+
+            List<String> ids = (ArrayList<String>) seasonMap.get(APIKey.WATCHED);
+
+            for (String id : ids) {
+                Episode episode = realm.where(Episode.class).equalTo("id", Integer.parseInt(id)).findFirst();
+                if (episode != null) {
+                    episode.setWatched(true);
                 }
             }
 

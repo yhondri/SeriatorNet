@@ -38,4 +38,9 @@ public class APIKey {
     public static final String DISLIKE_USERS_SHOW_COLLECTION = "dislikeUsersShowCollection";
     public static final String DISLIKE = "dislike";
 
+    //Watched Episode
+    public static final String WATCHED_USERS_SHOW_COLLECTION = "watchedUsersShowCollection";
+    public static final String WATCHED = "watched";
+
+
 }
