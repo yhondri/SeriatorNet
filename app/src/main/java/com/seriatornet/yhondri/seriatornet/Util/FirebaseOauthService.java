@@ -34,7 +34,7 @@ public class FirebaseOauthService implements OauthService, OnCompleteListener<Au
     }
 
     @Override
-    public void LogOut() {
+    public void logOut() {
         firebaseAuth.signOut();
     }
 

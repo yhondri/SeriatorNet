@@ -15,6 +15,7 @@ import android.view.MenuItem;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -45,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
     private int mSelectedItem;
     private BottomNavigationView mBottomNav;
     private OnBackPressedListener onBackPressedListener;
+    private Realm realm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +76,11 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+        realm = Realm.getDefaultInstance();
+
+        loadLikeShows();
+        loadDislikeShows();
 
 //        if (!SharedPreferenceUtils.getInstance(this).getBoolanValue(SharedPreferenceKey.DID_LOAD_DEFAULT_DATA, false)) {
 //            Realm realm = Realm.getDefaultInstance();
@@ -135,6 +142,81 @@ public class MainActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setTitle(text);
+        }
+    }
+
+
+    private void loadLikeShows() {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        String path = APIKey.LIKE_USERS_SHOW_COLLECTION + "/" + SharedPreferenceUtils.getInstance(this).getStringValue(SharedPreferenceKey.USER_NAME, "");
+
+        db.document(path).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    updateLikeShows(task);
+                } else {
+                    Log.w("SERIATORNET", "Error getting documents.", task.getException());
+                }
+            }
+        });
+    }
+
+    private void loadDislikeShows() {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        String path = APIKey.DISLIKE_USERS_SHOW_COLLECTION + "/" + SharedPreferenceUtils.getInstance(this).getStringValue(SharedPreferenceKey.USER_NAME, "");
+
+        db.document(path).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    updateDisLikeShows(task);
+                } else {
+                    Log.w("SERIATORNET", "Error getting documents.", task.getException());
+                }
+            }
+        });
+    }
+
+
+
+    private void updateLikeShows(Task<DocumentSnapshot> task) {
+        Map<String, Object> seasonMap = task.getResult().getData();
+
+        if (seasonMap != null) {
+            realm.beginTransaction();
+
+            List<String> ids = (ArrayList<String>) seasonMap.get(APIKey.LIKE);
+
+            for (String id : ids) {
+                Show show = realm.where(Show.class).equalTo("id", Integer.parseInt(id)).findFirst();
+                if (show != null) {
+                    show.setLike(true);
+                    show.setDislike(false);
+                }
+            }
+
+            realm.commitTransaction();
+        }
+    }
+
+    private void updateDisLikeShows(Task<DocumentSnapshot> task) {
+        Map<String, Object> seasonMap = task.getResult().getData();
+
+        if (seasonMap != null) {
+            realm.beginTransaction();
+
+            List<String> ids = (ArrayList<String>) seasonMap.get(APIKey.DISLIKE);
+
+            for (String id : ids) {
+                Show show = realm.where(Show.class).equalTo("id", Integer.parseInt(id)).findFirst();
+                if (show != null) {
+                    show.setDislike(true);
+                    show.setLike(false);
+                }
+            }
+
+            realm.commitTransaction();
         }
     }
 }

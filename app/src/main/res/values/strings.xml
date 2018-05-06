@@ -43,6 +43,7 @@
     <!-- Profile -->
     <string name="log_out">Salir</string>
     <string name="like">Te gustan</string>
+    <string name="dislike">No te gustan</string>
     <string name="seen">Capítulos vistos</string>
     <string name="following">Siguiendo</string>
 

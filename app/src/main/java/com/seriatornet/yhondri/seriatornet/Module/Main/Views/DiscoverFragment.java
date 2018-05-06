@@ -1,6 +1,7 @@
 package com.seriatornet.yhondri.seriatornet.Module.Main.Views;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,6 +18,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.seriatornet.yhondri.seriatornet.Model.APIKey;
 import com.seriatornet.yhondri.seriatornet.Model.AppKey;
 import com.seriatornet.yhondri.seriatornet.Model.DataBase.Show.Show;
@@ -25,9 +31,12 @@ import com.seriatornet.yhondri.seriatornet.Module.Main.Adapter.RecyclerTouchList
 import com.seriatornet.yhondri.seriatornet.Module.Main.Adapter.ShowRecyclerViewAdapter;
 import com.seriatornet.yhondri.seriatornet.Module.ShowDetails.ShowDetailsActivity;
 import com.seriatornet.yhondri.seriatornet.R;
+import com.seriatornet.yhondri.seriatornet.Util.SharedPreferenceKey;
+import com.seriatornet.yhondri.seriatornet.Util.SharedPreferenceUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import io.realm.Case;
 import io.realm.Realm;

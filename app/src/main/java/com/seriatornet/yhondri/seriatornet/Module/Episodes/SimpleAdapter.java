@@ -75,4 +75,8 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.SimpleView
     public int getItemCount() {
         return mData.size();
     }
+
+    public Episode getItemAt(int position) {
+        return mData.get(position -1);
+    }
 }

@@ -10,9 +10,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.seriatornet.yhondri.seriatornet.Model.DataBase.Show.Show;
 import com.seriatornet.yhondri.seriatornet.Module.Login.LoginActivity;
 import com.seriatornet.yhondri.seriatornet.R;
 import com.seriatornet.yhondri.seriatornet.Util.FirebaseOauthService;
+
+import java.util.List;
+
+import io.realm.Realm;
 
 /**
  * Created by yhondri on 27/03/2018.
@@ -21,6 +26,7 @@ import com.seriatornet.yhondri.seriatornet.Util.FirebaseOauthService;
 public class ProfileFragment extends Fragment {
 
     private View rootView;
+    private Realm realm;
 
     public static Fragment newInstance() {
         Fragment frag = new ProfileFragment();
@@ -39,17 +45,12 @@ public class ProfileFragment extends Fragment {
             rootView = inflater.inflate(R.layout.fragment_profile, container, false);
         }
 
-        TextView followingEpisodesTextView = rootView.findViewById(R.id.followingCounterTextView);
-        TextView seenEpisodesTextView = rootView.findViewById(R.id.seenEpisodesTextView);
-        TextView likesCounterTextView = rootView.findViewById(R.id.likesCounterTextView);
-        ImageView profileImageView = rootView.findViewById(R.id.profileImageView);
+        realm = Realm.getDefaultInstance();
+
         rootView.findViewById(R.id.logOutButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FirebaseOauthService firebaseOauthService = new FirebaseOauthService();
-                getActivity().finish();
-                Intent loginIntent = new Intent(getActivity(), LoginActivity.class);
-                getActivity().startActivity(loginIntent);
+                logOut();
             }
         });
 
@@ -60,7 +61,6 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
     }
 
     @Override
@@ -70,7 +70,47 @@ public class ProfileFragment extends Fragment {
         super.onSaveInstanceState(outState);
     }
 
-    private void setUpView() {
+    @Override
+    public void onResume() {
+        super.onResume();
 
+        setUp();
+    }
+
+    private void setUp() {
+
+        List<Show> followingShows = realm.where(Show.class)
+                .equalTo("following", true)
+                .findAll();
+
+        TextView followingEpisodesTextView = rootView.findViewById(R.id.followingCounterTextView);
+        followingEpisodesTextView.setText(Integer.toString(followingShows.size()));
+
+        List<Show> likeShows = realm.where(Show.class)
+                .equalTo("like", true)
+                .findAll();
+        TextView likesCounterTextView = rootView.findViewById(R.id.likesCounterTextView);
+        likesCounterTextView.setText(Integer.toString(likeShows.size()));
+
+
+        List<Show> dislikeShows = realm.where(Show.class)
+                .equalTo("dislike", true)
+                .findAll();
+        TextView dislikeShowsTextView = rootView.findViewById(R.id.dislikeShowsTextView);
+        dislikeShowsTextView.setText(Integer.toString(dislikeShows.size()));
+    }
+
+    private void logOut() {
+        realm.beginTransaction();
+        realm.deleteAll();
+        realm.commitTransaction();
+        realm.close();
+
+        FirebaseOauthService firebaseOauthService = new FirebaseOauthService();
+        firebaseOauthService.logOut();
+
+        getActivity().finish();
+        Intent loginIntent = new Intent(getActivity(), LoginActivity.class);
+        getActivity().startActivity(loginIntent);
     }
 }

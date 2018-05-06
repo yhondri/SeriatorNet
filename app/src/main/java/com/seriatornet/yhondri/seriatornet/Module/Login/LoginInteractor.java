@@ -256,10 +256,13 @@ public class LoginInteractor implements LoginInteractorInput, OauthServiceResult
             episode.setNumber(number);
             episode.setOverview(overView);
             episode.setTitle(title);
-            try {
-                episode.setEmissionDate(simpleDateFormat.parse(firstAired));
-            } catch (ParseException e) {
-                e.printStackTrace();
+
+            if (firstAired != null && !firstAired.isEmpty()) {
+                try {
+                    episode.setEmissionDate(simpleDateFormat.parse(firstAired));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }
 
             episode.setSeason(seasonEpisodes);

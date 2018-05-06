@@ -31,11 +31,11 @@ public class APIKey {
     public static final String FOLLOWING_USERS_SHOW_COLLECTION = "followingUsersShowCollection";
 
     //Like shows
-    public static final String FAVORITE_USERS_SHOW_COLLECTION = "favoriteUsersShowCollection";
+    public static final String LIKE_USERS_SHOW_COLLECTION = "likeUsersShowCollection";
     public static final String LIKE = "like";
 
     //Dislike shows
-    public static final String NO_FAVORITE_USERS_SHOW_COLLECTION = "nofavoriteUsersShowCollection";
+    public static final String DISLIKE_USERS_SHOW_COLLECTION = "dislikeUsersShowCollection";
     public static final String DISLIKE = "dislike";
 
 }
