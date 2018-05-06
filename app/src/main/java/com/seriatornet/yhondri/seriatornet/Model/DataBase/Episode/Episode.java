@@ -20,6 +20,7 @@ public class Episode extends RealmObject {
     private int number;
     private double rating;
     private String overview;
+    private Date emissionDate;
     private Season season;
 
     public int getId() {
@@ -68,6 +69,14 @@ public class Episode extends RealmObject {
 
     public void setOverview(String overview) {
         this.overview = overview;
+    }
+
+    public Date getEmissionDate() {
+        return emissionDate;
+    }
+
+    public void setEmissionDate(Date emissionDate) {
+        this.emissionDate = emissionDate;
     }
 
     public Season getSeason() {

@@ -84,9 +84,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderManager.Lo
 
         populateAutoComplete();
 
-        LoginInteractorInput interactor = new LoginInteractor(this);
         FirebaseOauthService firebaseOauthService = new FirebaseOauthService();
+        LoginInteractorInput interactor = new LoginInteractor(this, firebaseOauthService);
         presenter = new LoginPresenter(this, new LoginRouter(this), interactor, firebaseOauthService);
+        interactor.setOutput((LoginInteractorOutput) presenter);
     }
 
     //region Autocomplete

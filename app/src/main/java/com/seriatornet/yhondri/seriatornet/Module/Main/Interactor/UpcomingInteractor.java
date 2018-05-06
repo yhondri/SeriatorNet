@@ -23,16 +23,16 @@ public class UpcomingInteractor implements UpcomingInteractorInput {
 
     @Override
     public List<Episode> getEpisodes() {
-        RealmResults<Show> shows = realm.where(Show.class).findAll();
+        RealmResults<Show> shows = realm.where(Show.class).equalTo("following", true).findAll();
         List<Episode> episodes = new ArrayList<>();
 
-//        for (Show show : shows) {
-//            Episode episode = realm.where(Episode.class)
-//                    .equalTo("season.show.id", show.getId())
-//                    .sort("emissionDate")
-//                    .findFirst();
-//            episodes.add(episode);
-//        }
+        for (Show show : shows) {
+            Episode episode = realm.where(Episode.class)
+                    .equalTo("season.show.id", show.getId())
+                    .sort("title")
+                    .findFirst();
+            episodes.add(episode);
+        }
 
         return episodes;
     }

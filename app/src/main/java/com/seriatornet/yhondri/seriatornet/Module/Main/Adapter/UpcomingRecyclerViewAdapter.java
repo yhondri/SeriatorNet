@@ -17,7 +17,12 @@ import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.seriatornet.yhondri.seriatornet.Model.DataBase.Episode.Episode;
+import com.seriatornet.yhondri.seriatornet.Model.DataBase.Show.Show;
 import com.seriatornet.yhondri.seriatornet.R;
 import com.seriatornet.yhondri.seriatornet.Util.Utils;
 
@@ -34,11 +39,20 @@ public class UpcomingRecyclerViewAdapter extends RecyclerView.Adapter<UpcomingRe
     private List<Episode> episodes;
     private DateFormat formatter;
     private Context context;
+    private DisplayImageOptions mOptionsThumb;
 
     public UpcomingRecyclerViewAdapter(List<Episode> episodes, Context context) {
         this.episodes = episodes;
         this.context = context;
         formatter = new SimpleDateFormat("EE dd-MM-yyyy HH:mm");
+
+        mOptionsThumb = Utils.getDisplayImageOptionsBuildWithDisplayer(R.drawable.ic_television,
+                300,
+                new FadeInBitmapDisplayer(300));
+
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context)
+                .build();
+        ImageLoader.getInstance().init(config);
     }
 
     // Create new views (invoked by the layout manager)
@@ -54,18 +68,23 @@ public class UpcomingRecyclerViewAdapter extends RecyclerView.Adapter<UpcomingRe
     public void onBindViewHolder(ViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-       /** Episode episode = episodes.get(position);
+        Episode episode = episodes.get(position);
         holder.showNameTextView.setText(episode.getSeason().getShow().getTitle());
         String emissionDate = formatter.format(episode.getEmissionDate());
         holder.dateTextView.setText(emissionDate);
 
-//        Drawable posterDrawable = Utils.getImage(episode.getSeason().getShow().getPoster(), context);
-//        Bitmap posterBitmap = Utils.drawableToBitmap(posterDrawable);
-//        holder.posterImageView.setImageBitmap(posterBitmap);
-//
-//        Drawable banner = Utils.getImage(episode.getSeason().getShow().getBanner(), context);
-//        Bitmap bannerBitmap = Utils.drawableToBitmap(banner);
-//        holder.backgroundImageView.setImageBitmap(bannerBitmap);
+        Show show = episode.getSeason().getShow();
+        if (!show.getBackdropPath().isEmpty()) {
+            ImageLoader.getInstance().displayImage(show.getBackdropPath(), holder.backgroundImageView, mOptionsThumb);
+        } else {
+            holder.backgroundImageView.setImageResource(R.drawable.ic_television);
+        }
+
+        if (!show.getPosterPath().isEmpty()) {
+            ImageLoader.getInstance().displayImage(show.getPosterPath(), holder.posterImageView, mOptionsThumb);
+        } else {
+            holder.posterImageView.setImageResource(R.drawable.ic_television);
+        }
 
         String episodeName = "S";
 
@@ -81,7 +100,7 @@ public class UpcomingRecyclerViewAdapter extends RecyclerView.Adapter<UpcomingRe
             episodeName += "E" + Integer.toString(episode.getNumber());
         }
 
-        holder.episodeNameTextView.setText(episodeName);*/
+        holder.episodeNameTextView.setText(episodeName);
     }
 
     // Return the size of your dataset (invoked by the layout manager)

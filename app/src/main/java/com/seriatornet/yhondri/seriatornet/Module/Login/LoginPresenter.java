@@ -11,66 +11,37 @@ import com.seriatornet.yhondri.seriatornet.Util.Utils;
  * Created by yhondri on 28/03/2018.
  */
 
-public class LoginPresenter implements LoginPresentation, OauthServiceResult {
+public class LoginPresenter implements LoginPresentation, LoginInteractorOutput {
 
     private LoginView view;
     private LoginWireframe router;
     private LoginInteractorInput interactor;
-    private OauthService oauthService;
 
     public LoginPresenter(LoginView view, LoginWireframe router, LoginInteractorInput interactor, OauthService oauthService) {
         this.view = view;
         this.router = router;
         this.interactor = interactor;
-        this.oauthService = oauthService;
     }
 
     @Override
     public void onLogin(String email, String password) {
         view.resetFieldsErrors();
-
-        if (Utils.isEmpty(email)) {
-            view.showInvalidEmailError(R.string.error_field_required);
-            return;
-        }
-
-        if (!Utils.isEmailValid(email)) {
-            view.showInvalidEmailError(R.string.error_invalid_email);
-            return;
-        }
-
-        if (Utils.isEmpty(password)) {
-            view.showInvalidPasswordError(R.string.error_field_required);
-            return;
-        }
-
         view.onProgressBar(false);
         view.onLoginUser();
 
-        oauthService.signInWithEmailAndPassword(email, password, this);
+        interactor.onLogin(email, password);
     }
 
     @Override
-    public void onComplete(boolean success, User user) {
+    public void onLoginDidFail(int errorMessage) {
+        view.showInvalidPasswordError(errorMessage);
+    }
+
+    @Override
+    public void onLoadingDataDidFinish(String userName) {
         view.loginDidEnd();
-
-        if (success) {
-            String userName = user.getUserName();
-            if (userName == null) {
-                userName = user.getEmail();
-            }
-
-            interactor.userDidLogin(user);
-
-            router.showMainActivity();
-
-            view.showAuthenticationDidSuccessMessage(userName);
-            view.closeActivity();
-
-        } else {
-            view.showAuthenticationDidFailError("Authentication failed.");
-        }
-
-        view.onProgressBar(true);
+        view.showAuthenticationDidSuccessMessage(userName);
+        router.showMainActivity();
+        view.closeActivity();
     }
 }

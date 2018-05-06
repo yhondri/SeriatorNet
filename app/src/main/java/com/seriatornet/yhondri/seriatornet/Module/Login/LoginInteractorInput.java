@@ -9,7 +9,8 @@ import com.seriatornet.yhondri.seriatornet.Model.DataBase.User;
 public interface LoginInteractorInput {
     /**
      * Método que recibe un nuevo usuario y lo guarda.
-     * @param newUser Nuevo usuario en la aplicación.
      */
-    void userDidLogin(User newUser);
+    void onLogin(String email, String password);
+
+    void setOutput(LoginInteractorOutput output);
 }

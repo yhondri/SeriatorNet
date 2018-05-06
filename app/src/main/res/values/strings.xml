@@ -38,6 +38,7 @@
     <string name="password_help">La contraseña debe contener 5 o más carácteres e incluir letras mayúsculas y minúsculas, y al menos 1 número.</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="title_activity_show_details">ShowDetailsActivity</string>
+    <string name="login_did_fail">Ha ocurrido un error al intentar autentificarse en la aplicación</string>
 
     <!-- Profile -->
     <string name="log_out">Salir</string>

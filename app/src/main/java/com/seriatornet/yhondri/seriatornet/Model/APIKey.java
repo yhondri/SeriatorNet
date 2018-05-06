@@ -23,6 +23,9 @@ public class APIKey {
     //Season
     public static final String NUMBER = "number";
 
+    //Episode
+    public static final String FIRST_AIRED = "first_aired";
+
     //Following shows
     public static final String FOLLOWING = "following";
     public static final String FOLLOWING_USERS_SHOW_COLLECTION = "followingUsersShowCollection";
