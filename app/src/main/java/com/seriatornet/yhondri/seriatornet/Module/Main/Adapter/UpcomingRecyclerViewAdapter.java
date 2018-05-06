@@ -127,4 +127,8 @@ public class UpcomingRecyclerViewAdapter extends RecyclerView.Adapter<UpcomingRe
             backgroundImageView = itemView.findViewById(R.id.upcoming_show_background_imageview);
         }
     }
+
+    public Episode getItemAt(int position) {
+        return episodes.get(position);
+    }
 }

@@ -1,5 +1,6 @@
 package com.seriatornet.yhondri.seriatornet.Module.Main.Views;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,11 +10,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.seriatornet.yhondri.seriatornet.Model.AppKey;
+import com.seriatornet.yhondri.seriatornet.Model.DataBase.Show.Show;
+import com.seriatornet.yhondri.seriatornet.Module.EpisodeActivity.EpisodeActivity;
+import com.seriatornet.yhondri.seriatornet.Module.Episodes.EpisodesActivity;
+import com.seriatornet.yhondri.seriatornet.Module.Main.Adapter.ClickListener;
+import com.seriatornet.yhondri.seriatornet.Module.Main.Adapter.RecyclerTouchListener;
 import com.seriatornet.yhondri.seriatornet.Module.Main.Adapter.UpcomingRecyclerViewAdapter;
 import com.seriatornet.yhondri.seriatornet.Module.Main.Interactor.UpcomingInteractor;
 import com.seriatornet.yhondri.seriatornet.Module.Main.Presenter.UpcomingPresentation;
 import com.seriatornet.yhondri.seriatornet.Module.Main.Presenter.UpcomingPresenter;
 import com.seriatornet.yhondri.seriatornet.Model.DataBase.Episode.Episode;
+import com.seriatornet.yhondri.seriatornet.Module.ShowDetails.ShowDetailsActivity;
 import com.seriatornet.yhondri.seriatornet.R;
 
 import java.util.List;
@@ -24,7 +32,7 @@ import io.realm.Realm;
  * Created by yhondri on 27/03/2018.
  */
 
-public class UpcomingFragment extends Fragment implements UpcomingFragmentView {
+public class UpcomingFragment extends Fragment implements UpcomingFragmentView, ClickListener {
 
     private String mText;
     private int mColor;
@@ -32,6 +40,7 @@ public class UpcomingFragment extends Fragment implements UpcomingFragmentView {
     private View rootView;
     private UpcomingPresentation presenter;
     private Realm realm;
+    private UpcomingRecyclerViewAdapter adapter;
 
     public static Fragment newInstance() {
         Fragment frag = new UpcomingFragment();
@@ -61,8 +70,11 @@ public class UpcomingFragment extends Fragment implements UpcomingFragmentView {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
 
+        RecyclerTouchListener recyclerTouchListener = new RecyclerTouchListener(getActivity(), recyclerView, this);
+        recyclerView.addOnItemTouchListener(recyclerTouchListener);
+
         List<Episode> episodes = presenter.getEpisodes();
-        UpcomingRecyclerViewAdapter adapter = new UpcomingRecyclerViewAdapter(episodes, getActivity());
+        adapter = new UpcomingRecyclerViewAdapter(episodes, getActivity());
         recyclerView.setAdapter(adapter);
 
         return rootView;
@@ -71,17 +83,6 @@ public class UpcomingFragment extends Fragment implements UpcomingFragmentView {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        // retrieve text and color from bundle or savedInstanceState
-//        if (savedInstanceState == null) {
-//            Bundle args = getArguments();
-//            mText = args.getString(ARG_TEXT);
-//            mColor = args.getInt(ARG_COLOR);
-//        } else {
-//            mText = savedInstanceState.getString(ARG_TEXT);
-//            mColor = savedInstanceState.getInt(ARG_COLOR);
-//        }
-
     }
 
     @Override
@@ -102,6 +103,22 @@ public class UpcomingFragment extends Fragment implements UpcomingFragmentView {
     @Override
     public void releaseInstances() {
         realm.close();
+    }
+
+    @Override
+    public void onClick(View view, int position) {
+        Intent episodeActivityIntent = new Intent(getActivity(), EpisodeActivity.class);
+
+        Episode episode = adapter.getItemAt(position);
+        episodeActivityIntent.putExtra(AppKey.SHOW_ID, episode.getSeason().getShow().getId());
+        episodeActivityIntent.putExtra(AppKey.EPISODE_ID, episode.getId());
+
+        startActivity(episodeActivityIntent);
+    }
+
+    @Override
+    public void onLongClick(View view, int position) {
+
     }
 
     //endregion

@@ -80,4 +80,5 @@
         media and American life in general.</string>
     <string name="title_activity_profile">ProfileActivity</string>
     <string name="title_activity_episodes">EpisodesActivity</string>
+    <string name="title_activity_episode">EpisodeActivity</string>
 </resources>
