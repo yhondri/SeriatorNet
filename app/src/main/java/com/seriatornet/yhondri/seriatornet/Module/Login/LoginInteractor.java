@@ -52,7 +52,7 @@ public class LoginInteractor implements LoginInteractorInput, OauthServiceResult
         this.oauthService = oauthService;
         this.realm = Realm.getDefaultInstance();
 
-        simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX");
+        simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
     }
 
     @Override
