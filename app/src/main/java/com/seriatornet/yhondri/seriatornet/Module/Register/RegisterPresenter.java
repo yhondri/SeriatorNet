@@ -8,6 +8,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
 import com.seriatornet.yhondri.seriatornet.Model.DataBase.User;
 import com.seriatornet.yhondri.seriatornet.R;
@@ -91,5 +92,17 @@ public class RegisterPresenter implements RegisterPresentation, OauthServiceResu
         }
 
         view.onProgressBar(true);
+    }
+
+    @Override
+    public void onRegisterDidFail(@NonNull Task<AuthResult> task) {
+        view.registerDidEnd();
+        view.onProgressBar(true);
+
+        if (task.getException() instanceof FirebaseAuthUserCollisionException) {
+            view.showAuthenticationDidFailError(context.getString(R.string.error_invalid_user));
+        } else {
+            view.showAuthenticationDidFailError("Authentication failed.");
+        }
     }
 }

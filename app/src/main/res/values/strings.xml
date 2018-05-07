@@ -33,6 +33,7 @@
     <string name="error_invalid_password">La contraseña no cumple todas las condiciones para ser segura</string>
     <string name="error_incorrect_password">La contraseña es incorrecta</string>
     <string name="error_field_required">Campo obligatorio</string>
+    <string name="error_invalid_user">Ya existe un usuario con ese correo</string>
     <string name="permission_rationale">"El permiso para acceder a los Contactos es necesaerio para
         utilizar el autompletado en el campo del correo  </string>
     <string name="register_completed_message">Welcome %1$s</string>

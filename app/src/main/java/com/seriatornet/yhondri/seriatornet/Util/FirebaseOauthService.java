@@ -1,11 +1,13 @@
 package com.seriatornet.yhondri.seriatornet.Util;
 
 import android.support.annotation.NonNull;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
 import com.seriatornet.yhondri.seriatornet.Model.DataBase.User;
 
@@ -40,8 +42,12 @@ public class FirebaseOauthService implements OauthService, OnCompleteListener<Au
 
     @Override
     public void onComplete(@NonNull Task<AuthResult> task) {
-        FirebaseUser user = task.getResult().getUser();
-        User newUser = new User(user.getDisplayName(), user.getEmail());
-        listener.onComplete(task.isSuccessful(), newUser);
+        if (task.isSuccessful()) {
+            FirebaseUser user = task.getResult().getUser();
+            User newUser = new User(user.getDisplayName(), user.getEmail());
+            listener.onComplete(task.isSuccessful(), newUser);
+        } else {
+            listener.onRegisterDidFail(task);
+        }
     }
 }

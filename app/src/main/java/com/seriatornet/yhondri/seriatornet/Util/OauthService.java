@@ -26,4 +26,5 @@ public interface OauthService {
     void createUserWithEmailAndPassword(String email, String password, OauthServiceResult listener);
 
     void logOut();
+
 }

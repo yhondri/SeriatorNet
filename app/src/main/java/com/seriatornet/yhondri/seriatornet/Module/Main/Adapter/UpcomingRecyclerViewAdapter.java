@@ -70,8 +70,10 @@ public class UpcomingRecyclerViewAdapter extends RecyclerView.Adapter<UpcomingRe
         // - replace the contents of the view with that element
         Episode episode = episodes.get(position);
         holder.showNameTextView.setText(episode.getSeason().getShow().getTitle());
-        String emissionDate = formatter.format(episode.getEmissionDate());
-        holder.dateTextView.setText(emissionDate);
+        if (episode.getEmissionDate() != null) {
+            String emissionDate = formatter.format(episode.getEmissionDate());
+            holder.dateTextView.setText(emissionDate);
+        }
 
         Show show = episode.getSeason().getShow();
         if (!show.getBackdropPath().isEmpty()) {

@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -83,6 +84,11 @@ public class LoginInteractor implements LoginInteractorInput, OauthServiceResult
         } else {
             output.onLoginDidFail(R.string.login_did_fail);
         }
+    }
+
+    @Override
+    public void onRegisterDidFail(@NonNull Task<AuthResult> task) {
+        output.onLoginDidFail(R.string.login_did_fail);
     }
 
     public void setOutput(LoginInteractorOutput output) {

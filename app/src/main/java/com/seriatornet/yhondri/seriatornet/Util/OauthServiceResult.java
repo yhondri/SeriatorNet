@@ -1,5 +1,9 @@
 package com.seriatornet.yhondri.seriatornet.Util;
 
+import android.support.annotation.NonNull;
+
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.seriatornet.yhondri.seriatornet.Model.DataBase.User;
 
 public interface OauthServiceResult {
@@ -9,4 +13,5 @@ public interface OauthServiceResult {
     * @param user Usuario.
     */
    void onComplete(boolean success, User user);
+   void onRegisterDidFail(@NonNull Task<AuthResult> task);
 }
