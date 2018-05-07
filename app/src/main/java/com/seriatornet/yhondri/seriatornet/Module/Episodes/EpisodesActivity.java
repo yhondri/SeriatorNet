@@ -49,14 +49,19 @@ public class EpisodesActivity extends AppCompatActivity implements ClickListener
         RecyclerTouchListener recyclerTouchListener = new RecyclerTouchListener(this, mRecyclerView, this);
         mRecyclerView.addOnItemTouchListener(recyclerTouchListener);
 
-        List<Season> seasons = realm.where(Season.class).equalTo("show.id", showId).findAll();
+        List<Season> seasons = realm.where(Season.class).equalTo("show.id", showId)
+                .sort("number")
+                .findAll();
         List<Episode> episodes = new ArrayList<>();
 
         List<SimpleSectionedRecyclerViewAdapter.Section> sections = new ArrayList<>();
 
         int counter = 0;
         for (Season season : seasons) {
-            List<Episode> seasonsEpisodes = realm.where(Episode.class).equalTo("season.traktId", season.getTraktId()).findAll();
+            List<Episode> seasonsEpisodes = realm.where(Episode.class)
+                    .equalTo("season.traktId", season.getTraktId())
+                    .sort("number")
+                    .findAll();
             episodes.addAll(seasonsEpisodes);
 
             sections.add(new SimpleSectionedRecyclerViewAdapter.Section(counter, "Temporada " + season.getNumber()));

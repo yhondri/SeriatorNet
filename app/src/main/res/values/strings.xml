@@ -50,6 +50,11 @@
     <string name="following">Siguiendo</string>
     <string name="watched">Capítulos vistos</string>
 
+    <!-- Episode details -->
+
+    <string name="follow">Seguir</string>
+    <string name="emission_date">Fecha de emisión</string>
+
     <!-- Discover fragment -->
 
     <string-array name="shows_categories">

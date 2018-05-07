@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     private BottomNavigationView mBottomNav;
     private OnBackPressedListener onBackPressedListener;
     private Realm realm;
+    private ShowsDataSource showsDataSource;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,6 +114,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_watching:
                 fragment = UpcomingFragment.newInstance();
                 toolBarTitle = getString(R.string.upcoming);
+                showsDataSource = (UpcomingFragment) fragment;
                 break;
             case R.id.action_search:
                 fragment = DiscoverFragment.newInstance();
@@ -147,7 +149,6 @@ public class MainActivity extends AppCompatActivity {
             actionBar.setTitle(text);
         }
     }
-
 
     private void loadLikeShows() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -253,6 +254,8 @@ public class MainActivity extends AppCompatActivity {
             }
 
             realm.commitTransaction();
+
+            showsDataSource.didUpdateShows();
         }
     }
 }

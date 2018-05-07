@@ -29,6 +29,7 @@ import com.seriatornet.yhondri.seriatornet.R;
 import com.seriatornet.yhondri.seriatornet.Util.SharedPreferenceKey;
 import com.seriatornet.yhondri.seriatornet.Util.SharedPreferenceUtils;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -108,6 +109,13 @@ public class EpisodeActivity extends AppCompatActivity {
                 postWatchedEpisode();
             }
         });
+
+        if (episode.getEmissionDate() != null) {
+            SimpleDateFormat formatter = new SimpleDateFormat("EE dd-MM-yyyy HH:mm");
+            String emissionDate = formatter.format(episode.getEmissionDate());
+            TextView emissionDateTextView = findViewById(R.id.emissionDateTextView);
+            emissionDateTextView.setText(emissionDate);
+        }
 
         setUpWatchedButtons(episode.isWatched());
     }

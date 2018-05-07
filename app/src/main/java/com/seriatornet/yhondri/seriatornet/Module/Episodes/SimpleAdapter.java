@@ -9,6 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.seriatornet.yhondri.seriatornet.Model.DataBase.Episode.Episode;
+import com.seriatornet.yhondri.seriatornet.Model.DataBase.Show.Show;
 import com.seriatornet.yhondri.seriatornet.R;
 
 import java.util.ArrayList;
@@ -62,7 +63,8 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.SimpleView
 
     @Override
     public void onBindViewHolder(SimpleViewHolder holder, final int position) {
-        holder.title.setText(mData.get(position).getTitle());
+        Episode episode = mData.get(position);
+        holder.title.setText(episode.getNumber() + " - " + episode.getTitle());
         holder.title.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

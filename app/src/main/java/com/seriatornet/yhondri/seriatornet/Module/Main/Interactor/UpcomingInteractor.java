@@ -8,6 +8,7 @@ import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
+import io.realm.Sort;
 
 /**
  * Created by yhondri on 28/03/2018.
@@ -29,8 +30,8 @@ public class UpcomingInteractor implements UpcomingInteractorInput {
         for (Show show : shows) {
             Episode episode = realm.where(Episode.class)
                     .equalTo("season.show.id", show.getId())
-                    .sort("title")
-                    .findFirst();
+                    .equalTo("watched", false)
+                    .sort("emissionDate", Sort.ASCENDING).findAll().first();
             episodes.add(episode);
         }
 

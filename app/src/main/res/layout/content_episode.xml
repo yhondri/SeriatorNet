@@ -28,7 +28,7 @@
                 android:id="@+id/showDetailsLinearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="15dp"
+                android:layout_margin="10dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -74,13 +74,35 @@
 
             </LinearLayout>
 
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/emission_date"
+                    android:textColor="@color/white" />
+
+                <TextView
+                    android:id="@+id/emissionDateTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="22/02/1993"
+                    android:textColor="@color/white" />
+
+            </LinearLayout>
+
             <ImageButton
                 android:id="@+id/watchImageButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_white_eye"
                 android:background="@null"
-                android:layout_marginLeft="15dp"
+                android:layout_margin="10dp"
                 />
 
             <TextView

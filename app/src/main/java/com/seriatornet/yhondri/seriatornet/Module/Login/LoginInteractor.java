@@ -252,6 +252,11 @@ public class LoginInteractor implements LoginInteractorInput, OauthServiceResult
 
         Season seasonEpisodes = realm.where(Season.class).equalTo("traktId", season.getTraktId()).findFirst();
 
+        if (season.getShow().getTitle().equalsIgnoreCase("Blindspot")) {
+            String stop = "";
+            stop += "";
+        }
+
         for (QueryDocumentSnapshot document : task.getResult()) {
             Map<String, Object> seasonMap = document.getData();
 

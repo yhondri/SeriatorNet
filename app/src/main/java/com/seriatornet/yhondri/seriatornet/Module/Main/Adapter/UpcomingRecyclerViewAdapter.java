@@ -102,7 +102,7 @@ public class UpcomingRecyclerViewAdapter extends RecyclerView.Adapter<UpcomingRe
             episodeName += "E" + Integer.toString(episode.getNumber());
         }
 
-        holder.episodeNameTextView.setText(episodeName);
+        holder.episodeNameTextView.setText(episodeName + " - " + episode.getTitle());
     }
 
     // Return the size of your dataset (invoked by the layout manager)

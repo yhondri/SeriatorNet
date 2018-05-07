@@ -28,11 +28,7 @@ import java.util.List;
 
 import io.realm.Realm;
 
-/**
- * Created by yhondri on 27/03/2018.
- */
-
-public class UpcomingFragment extends Fragment implements UpcomingFragmentView, ClickListener {
+public class UpcomingFragment extends Fragment implements UpcomingFragmentView, ClickListener, ShowsDataSource {
 
     private String mText;
     private int mColor;
@@ -41,6 +37,7 @@ public class UpcomingFragment extends Fragment implements UpcomingFragmentView, 
     private UpcomingPresentation presenter;
     private Realm realm;
     private UpcomingRecyclerViewAdapter adapter;
+    private RecyclerView recyclerView;
 
     public static Fragment newInstance() {
         Fragment frag = new UpcomingFragment();
@@ -64,7 +61,7 @@ public class UpcomingFragment extends Fragment implements UpcomingFragmentView, 
         UpcomingInteractor upcomingInteractor = new UpcomingInteractor(realm);
         presenter = new UpcomingPresenter(upcomingInteractor, this);
 
-        RecyclerView recyclerView = rootView.findViewById(R.id.upcoming_recycler_view);
+        recyclerView = rootView.findViewById(R.id.upcoming_recycler_view);
         recyclerView.setHasFixedSize(true);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
@@ -73,9 +70,7 @@ public class UpcomingFragment extends Fragment implements UpcomingFragmentView, 
         RecyclerTouchListener recyclerTouchListener = new RecyclerTouchListener(getActivity(), recyclerView, this);
         recyclerView.addOnItemTouchListener(recyclerTouchListener);
 
-        List<Episode> episodes = presenter.getEpisodes();
-        adapter = new UpcomingRecyclerViewAdapter(episodes, getActivity());
-        recyclerView.setAdapter(adapter);
+        didUpdateShows();
 
         return rootView;
     }
@@ -119,6 +114,13 @@ public class UpcomingFragment extends Fragment implements UpcomingFragmentView, 
     @Override
     public void onLongClick(View view, int position) {
 
+    }
+
+    @Override
+    public void didUpdateShows() {
+        List<Episode> episodes = presenter.getEpisodes();
+        adapter = new UpcomingRecyclerViewAdapter(episodes, getActivity());
+        recyclerView.setAdapter(adapter);
     }
 
     //endregion

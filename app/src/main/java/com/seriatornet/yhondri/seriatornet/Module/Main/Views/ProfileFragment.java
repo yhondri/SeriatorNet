@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.seriatornet.yhondri.seriatornet.Model.APIKey;
 import com.seriatornet.yhondri.seriatornet.Model.DataBase.Episode.Episode;
 import com.seriatornet.yhondri.seriatornet.Model.DataBase.Show.Show;
 import com.seriatornet.yhondri.seriatornet.Module.Login.LoginActivity;
@@ -118,6 +119,9 @@ public class ProfileFragment extends Fragment {
 
         FirebaseOauthService firebaseOauthService = new FirebaseOauthService();
         firebaseOauthService.logOut();
+
+        SharedPreferenceUtils.getInstance(getActivity()).removeKey(SharedPreferenceKey.USER_NAME);
+        SharedPreferenceUtils.getInstance(getActivity()).removeKey(SharedPreferenceKey.IS_USER_LOGGED_IN);
 
         getActivity().finish();
         Intent loginIntent = new Intent(getActivity(), LoginActivity.class);
