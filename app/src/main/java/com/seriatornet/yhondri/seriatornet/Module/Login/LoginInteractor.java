@@ -107,7 +107,6 @@ public class LoginInteractor implements LoginInteractorInput, OauthServiceResult
         loadShows();
     }
 
-
     private void loadShows() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("shows").get()
@@ -173,7 +172,6 @@ public class LoginInteractor implements LoginInteractorInput, OauthServiceResult
         } else {
             output.onLoginDidFail(R.string.no_data);
         }
-
 
 //        return shows;
     }

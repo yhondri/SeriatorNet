@@ -12,4 +12,9 @@
     <color name="cardview_semitransparent_dark_background">#BF000000</color>
     <color name="cardview_semitransparent2_dark_background">#4D000000</color>
 
+    <!-- error images colors -->
+    <color name="no_favorite_shows_image_bg_color">#F7F7F7</color>
+    <color name="search_not_found_image_bg_color">#F7F7F7</color>
+
+
 </resources>

@@ -5,6 +5,7 @@
     android:id="@+id/upcoming_contentView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/no_favorite_shows_image_bg_color"
     >
 
     <!-- A RecyclerView with some commonly used attributes -->
@@ -15,6 +16,14 @@
         android:layout_height="match_parent"
         tools:itemCount="3"
         tools:listitem="@layout/cardview_upcoming_show"
+        tools:visibility="gone"
+        />
+
+    <ImageView
+        android:id="@+id/noFavoritesSelectedImageView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/ic_no_favorite_shows"
         />
 
 </android.support.constraint.ConstraintLayout>

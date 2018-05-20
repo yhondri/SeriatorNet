@@ -275,7 +275,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderManager.Lo
     public void onLoaderReset(Loader<Cursor> cursorLoader) {
     }
 
-
     private interface ProfileQuery {
         String[] PROJECTION = {
                 ContactsContract.CommonDataKinds.Email.ADDRESS,

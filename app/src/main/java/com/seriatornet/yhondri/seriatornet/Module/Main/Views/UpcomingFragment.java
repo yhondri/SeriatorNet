@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.seriatornet.yhondri.seriatornet.Model.AppKey;
 import com.seriatornet.yhondri.seriatornet.Model.DataBase.Show.Show;
@@ -38,6 +39,7 @@ public class UpcomingFragment extends Fragment implements UpcomingFragmentView, 
     private Realm realm;
     private UpcomingRecyclerViewAdapter adapter;
     private RecyclerView recyclerView;
+    private ImageView noFavoritesSelectedImageView;
 
     public static Fragment newInstance() {
         Fragment frag = new UpcomingFragment();
@@ -69,6 +71,8 @@ public class UpcomingFragment extends Fragment implements UpcomingFragmentView, 
 
         RecyclerTouchListener recyclerTouchListener = new RecyclerTouchListener(getActivity(), recyclerView, this);
         recyclerView.addOnItemTouchListener(recyclerTouchListener);
+
+        noFavoritesSelectedImageView = rootView.findViewById(R.id.noFavoritesSelectedImageView);
 
         didUpdateShows();
 
@@ -121,6 +125,12 @@ public class UpcomingFragment extends Fragment implements UpcomingFragmentView, 
         List<Episode> episodes = presenter.getEpisodes();
         adapter = new UpcomingRecyclerViewAdapter(episodes, getActivity());
         recyclerView.setAdapter(adapter);
+
+        if (episodes.size() == 0) {
+            noFavoritesSelectedImageView.setVisibility(View.VISIBLE);
+        } else {
+            noFavoritesSelectedImageView.setVisibility(View.INVISIBLE);
+        }
     }
 
     //endregion

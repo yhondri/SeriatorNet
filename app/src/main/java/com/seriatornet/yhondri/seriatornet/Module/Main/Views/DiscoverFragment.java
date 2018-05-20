@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -53,6 +54,7 @@ public class DiscoverFragment extends Fragment implements ClickListener, SearchV
     private RecyclerView recyclerView;
     private DiscoverCategoriesAdapter discoverCategoriesAdapter;
     private ShowRecyclerViewAdapter showRecyclerViewAdapter;
+    private ImageView searchNotFoundImageView;
 
     public static Fragment newInstance() {
         Fragment frag = new DiscoverFragment();
@@ -80,6 +82,7 @@ public class DiscoverFragment extends Fragment implements ClickListener, SearchV
         recyclerView.setAdapter(discoverCategoriesAdapter);
 
         showRecyclerViewAdapter = new ShowRecyclerViewAdapter(new ArrayList<Show>(), getActivity());
+        searchNotFoundImageView = rootView.findViewById(R.id.searchNotFoundImageView);
 
         return rootView;
     }
@@ -150,7 +153,6 @@ public class DiscoverFragment extends Fragment implements ClickListener, SearchV
                 Snackbar.make(view, getActivity().getString(R.string.No_shows_with_selected_genre), Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();            }
         } else {
-
             Intent showsIntent = new Intent(getActivity(), ShowDetailsActivity.class);
 
             Show selectedShow = showRecyclerViewAdapter.getItemAt(position);
@@ -173,6 +175,7 @@ public class DiscoverFragment extends Fragment implements ClickListener, SearchV
     @Override
     public boolean onQueryTextChange(String newText) {
         if (newText.isEmpty()) {
+            searchNotFoundImageView.setVisibility(View.GONE);
             recyclerView.setAdapter(discoverCategoriesAdapter);
         } else {
             List<Show> shows = realm.where(Show.class)
@@ -182,6 +185,12 @@ public class DiscoverFragment extends Fragment implements ClickListener, SearchV
 
             showRecyclerViewAdapter.refreshData(shows);
             recyclerView.setAdapter(showRecyclerViewAdapter);
+
+            if (showRecyclerViewAdapter.getItemCount() == 0) {
+                searchNotFoundImageView.setVisibility(View.VISIBLE);
+            } else {
+                searchNotFoundImageView.setVisibility(View.GONE);
+            }
         }
 
         return false;
