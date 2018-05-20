@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.LoaderManager;
 import android.content.CursorLoader;
+import android.content.Intent;
 import android.content.Loader;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -28,6 +29,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.seriatornet.yhondri.seriatornet.Module.Welcome.WelcomeActivity;
 import com.seriatornet.yhondri.seriatornet.R;
 import com.seriatornet.yhondri.seriatornet.Util.FirebaseOauthService;
 
@@ -88,6 +90,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderManager.Lo
         LoginInteractorInput interactor = new LoginInteractor(this, firebaseOauthService);
         presenter = new LoginPresenter(this, new LoginRouter(this), interactor, firebaseOauthService);
         interactor.setOutput((LoginInteractorOutput) presenter);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent welcomeIntent = new Intent(this, WelcomeActivity.class);
+        startActivity(welcomeIntent);
+        finish();
     }
 
     //region Autocomplete
